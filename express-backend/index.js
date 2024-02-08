@@ -5,7 +5,7 @@ const userDB = require('./userDB');
 
 const app = express();
 const HOST = 'localhost';
-const PORT = 5000;
+const PORT = 3000;
 
 const userDatabase = new userDB('user.db');
 
