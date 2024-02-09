@@ -1,5 +1,6 @@
 const sql = require('sqlite3')
-const path = require('path')
+const path = require('path');
+const { error } = require('console');
 
 class userDB{
     constructor(Path){
@@ -16,6 +17,8 @@ class userDB{
         this.GETBYUSERNAME = 'SELECT * FROM users WHERE username = ?';
         this.DELETEWHERE = 'DELETE FROM users WHERE username = ?';
         this.UPDATEPASS = 'UPDATE users SET password = ? WHERE username = ?';
+        this.COUNTUSER = 'SELECT COUNT(*) AS count FROM users WHERE username = ?';
+        this.PASSWORD = 'SELECT password AS password FROM users WHERE username = ?'
 
         this.db = new sql.Database(dbPath, (err) => {
             if(err){
@@ -73,6 +76,17 @@ class userDB{
         });
     }
 
+    countUser(username){
+        this.db.get(this.COUNTUSER, [username], (err, row) => {
+            if(err){
+                console.error('Error counting username: ', err);
+                return 0;
+            }
+            console.log('Successfully counted');
+            return row.count;
+        });
+    }
+ 
     resetPass(user){
         this.db.run(this.UPDATEPASS, [user.password, user.username], (err) => {
             if(err){
@@ -90,6 +104,17 @@ class userDB{
                 return;
             }
             console.log('Successfully deleted user');
+        });
+    }
+
+    getAuthentication(username, password){
+        this.db.get(this.PASSWORD, [username], (err, rows) => {
+            if(err){
+                console.log('Error getting authentication: ', error);
+                return false;
+            }
+            password = rows.password;
+            
         });
     }
 }

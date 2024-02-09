@@ -5,7 +5,7 @@ const userDB = require('./userDB');
 
 const app = express();
 const HOST = 'localhost';
-const PORT = 3000;
+const PORT = 5000;
 
 const userDatabase = new userDB('user.db');
 
@@ -20,6 +20,26 @@ app.get('/user-pass', async (req, res) => {
         return res.status(400).json({
             error: true,
             message: "Error getting Data"
+        });
+    }
+});
+
+app.get('/login', async (req, res) => {
+    try{
+        const { username, password } = req.body;
+        const count = userDatabase.countUser(username);
+        if(count === 0){
+            return res.status(404).json({
+                error: true,
+                message: "User not fount!!"
+            });
+        }
+        pass = userDatabase.getAuthentication(username, password);
+    }catch(err){
+        console.log('Error login: ', err);
+        res.status('400').json({
+            error: true,
+            message: "Login failed"
         });
     }
 });
