@@ -8,6 +8,7 @@ const HOST = 'localhost';
 const PORT = 8000;
 
 const mysqlDatabase = new mysqlDB();
+// mysqlDatabase.init();
 
 app.use(bodyparser.json());
 app.use(cors());
