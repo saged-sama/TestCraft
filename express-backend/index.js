@@ -1,20 +1,20 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
-const userDB = require('./userDB');
+const mysqlDB = require('./src/mysqlDB');
 
 const app = express();
 const HOST = 'localhost';
 const PORT = 8000;
 
-const userDatabase = new userDB('user.db');
+const mysqlDatabase = new mysqlDB();
 
 app.use(bodyparser.json());
 app.use(cors());
 
 app.get('/user-pass', async (req, res) => {
     try{
-        const rows = await userDatabase.getAllUsers();
+        const rows = await mysqlDatabase.getAllUsers();
         return res.status(200).json(rows);
     } catch(err){
         return res.status(400).json({
@@ -26,9 +26,9 @@ app.get('/user-pass', async (req, res) => {
 
 app.post('/sign-up', async (req, res) => {
     try{
-        userDatabase.addUser(req.body);
+        mysqlDatabase.addUser(req.body);
         console.log(req.body.username);
-        user = await userDatabase.getUser(req.body.username);
+        user = await mysqlDatabase.getUser(req.body.username);
         return res.status(201).json(user[0]);
     } catch(err){
         return res.status(400).json({
@@ -40,7 +40,7 @@ app.post('/sign-up', async (req, res) => {
 
 app.delete('/delete-user-account', (req, res) => {
     try {
-        userDatabase.removeUser(req.body.username);
+        mysqlDatabase.removeUser(req.body.username);
         return res.status(200).json({
             error: false,
             message: "Successfully deleted user"
@@ -55,8 +55,8 @@ app.delete('/delete-user-account', (req, res) => {
 
 app.put('/reset-password', async (req, res) => {
     try{
-        userDatabase.resetPass(req.body);
-        user = await userDatabase.getUser(req.body.username);
+        mysqlDatabase.resetPass(req.body);
+        user = await mysqlDatabase.getUser(req.body.username);
         return res.status(200).json(user[0]);
     } catch(err){
         console.log('Error updating data: ', err);
