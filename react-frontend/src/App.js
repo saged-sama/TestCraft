@@ -1,21 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from "./Components/Home"
-import Login from "./Auth/Login"
-import Signup from "./Auth/Signup"
-import ForgetPass from "./Auth/ForgetPass"
+import Navbar from './Components/Navbar'
+import CreateExam from "./Exam/CreateExam"
+import TakeExam from "./Exam/TakeExam"
 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Routes>
-         <Route path="/" element={<Login />}/>
-         <Route path="/Login" element={<Login />}/>
-         <Route path="/Signup" element={<Signup />}/>
-         <Route path="/Forget-Password" element={<ForgetPass/>}/>
-        </Routes>
+        <div className="content">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Create-Exam" element={<CreateExam />} />
+            <Route path="/Take-Exam" element={<TakeExam />} />
+          </Routes>
+        </div>
+
       </div>
     </Router>
   );
