@@ -1,6 +1,6 @@
 -- users: This table is the basic user data. Another userinfo table is used for storing other essential user data
 CREATE TABLE IF NOT EXISTS users(
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -26,8 +26,8 @@ CREATE PROCEDURE adduser(
     IN p_profile_picture VARCHAR(255)
 )
 BEGIN
-    INSERT INTO users(username, password, email, type, first_name, last_name, bio, profile_picture)
-    VALUES (p_username, p_password, p_email, p_type, p_first_name, p_last_name, p_bio, p_profile_picture);
+    INSERT INTO users(id, username, password, email, type, first_name, last_name, bio, profile_picture)
+    VALUES (UUID(), p_username, p_password, p_email, p_type, p_first_name, p_last_name, p_bio, p_profile_picture);
 END//
 
 DELIMITER ;

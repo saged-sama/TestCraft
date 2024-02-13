@@ -160,9 +160,9 @@ class mysqlDB {
         }
     }
 
-    async updateProPic(user){
+    async updateProPic(username, profile_picture){
         try{
-            this.connection.query(this.UPDATEPROPICPROCEDURE, [user.username, user.profile_picture], (err, results, fields) => {
+            this.connection.query(this.UPDATEPROPICPROCEDURE, [username, profile_picture], (err, results, fields) => {
                 if(err){
                     console.error('Error updating profile picture: ', err);
                     return;

@@ -90,7 +90,9 @@ class usersTable{
 
         app.put('/update-pro-pic', async (req, res) => {
             try{
-                this.mysqlDatabase.updateProPic(req.body);
+                // const filepath = downloadfile(req.body.filepath)
+                const filepath = "../res/";
+                this.mysqlDatabase.updateProPic(req.body.username, filepath);
                 const user = await this.mysqlDatabase.getUser(req.body.username);
                 return res.status(200).json(user[0]);
             } catch(err){
