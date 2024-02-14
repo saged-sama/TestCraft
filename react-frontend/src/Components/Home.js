@@ -1,20 +1,27 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const Home = () => {
-    useEffect(() => {
-      fetch('https://codeforces.com/api/user.status?handle=ignite312&result=OK')
-      .then(res => {
-        return res.json();
-      })
-      .then((data) => {
+  const [infos, setInfos] = useState(null);
+
+  useEffect(() => {
+    fetch('https://codeforces.com/api/user.info?handles=Tspectre')
+      .then(res => res.json())
+      .then(data => {
         console.log(data);
+        setInfos(data);
       })
-    }, [])
-    return (
-        <div>
-          <h1>Hey</h1>
-        </div>
-    );
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  return (
+    <div>
+      {infos && 
+      console.log(infos.result.country)
+      }
+    </div>
+  );
 }
 
 export default Home;
