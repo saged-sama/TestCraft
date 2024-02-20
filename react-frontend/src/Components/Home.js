@@ -7,8 +7,8 @@ const Home = () => {
     fetch('https://codeforces.com/api/user.info?handles=Tspectre')
       .then(res => res.json())
       .then(data => {
-        console.log(data.result);
-        setInfos(data.result);
+        console.log(data);
+        setInfos(data);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <div>
       {infos && 
-      console.log(infos[0].country)
+      console.log(infos.result.country)
       }
     </div>
   );

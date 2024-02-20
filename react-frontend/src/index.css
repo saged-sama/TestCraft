@@ -35,3 +35,13 @@
   margin: 40px auto;
   padding: 20px;
 }
+.card-container {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+  margin: 10px;
+}
+.card {
+  padding: 10px;
+  width: 50px;
+}

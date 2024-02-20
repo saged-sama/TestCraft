@@ -5,7 +5,6 @@ import Navbar from './Components/Navbar'
 import CreateExam from "./Exam/CreateExam"
 import TakeExam from "./Exam/TakeExam"
 
-
 function App() {
   return (
     <Router>
@@ -13,9 +12,9 @@ function App() {
         <div className="content">
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Create-Exam" element={<CreateExam />} />
-            <Route path="/Take-Exam" element={<TakeExam />} />
+            <Route path="/" element = {<Home />} />
+            <Route path="/Create-Exam" element = {<CreateExam />} />
+            <Route path="/Take-Exam" element = {<TakeExam />} />
           </Routes>
         </div>
 
