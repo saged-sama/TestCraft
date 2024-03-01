@@ -1,6 +1,6 @@
 const mysqlDB = require('./mysqlDB');
 
-class usersTable{
+class users{
     constructor(app){
         this.mysqlDatabase = new mysqlDB();
         app.get('/user-pass', async (req, res) => {
@@ -106,4 +106,4 @@ class usersTable{
     }
 }
 
-module.exports = usersTable;
+module.exports = users;
