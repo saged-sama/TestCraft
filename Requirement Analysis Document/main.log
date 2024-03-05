@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.9)  1 MAR 2024 23:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.9)  2 MAR 2024 00:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -211,23 +211,30 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring ON on input line 35.
+ (main.out) (main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-<du.png, id=3, 808.01875pt x 1027.84pt>
+<du.png, id=139, 808.01875pt x 1027.84pt>
 File: du.png Graphic file (type png)
 <use du.png>
 Package pdftex.def Info: du.png  used on input line 38.
 (pdftex.def)             Requested size: 80.80661pt x 102.79001pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--57
+Underfull \hbox (badness 10000) in paragraph at lines 52--58
 
  []
 
 [1
 
-{C:/Users/mahmu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./du.png>]
-No file main.toc.
+{C:/Users/mahmu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./du.png>] (main.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
+)
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
@@ -235,93 +242,30 @@ No file main.toc.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.62 \newpage
-              [1]
-d:/Codes/Software Engineering Project/TestCraft/Requirement Analysis Document/main.tex:120: Undefined control sequence.
-l.120             \subsubsubsection
-                                   {Sequence Diagram}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
+l.63 \newpage
+              [1] [2] [3] [4]
+Overfull \vbox (83.99861pt too high) has occurred while \output is active []
 
-d:/Codes/Software Engineering Project/TestCraft/Requirement Analysis Document/main.tex:121: Undefined control sequence.
-l.121             \subsubsubsection
-                                   {Activity Diagram}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-d:/Codes/Software Engineering Project/TestCraft/Requirement Analysis Document/main.tex:122: Undefined control sequence.
-l.122             \subsubsubsection
-                                   {State Diagram}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-[2]
-Overfull \vbox (157.21417pt too high) has occurred while \output is active []
-
- [3]
-d:/Codes/Software Engineering Project/TestCraft/Requirement Analysis Document/main.tex:124: Undefined control sequence.
-l.124             \subsubsubsection
-                                   {User Interface}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-d:/Codes/Software Engineering Project/TestCraft/Requirement Analysis Document/main.tex:125: Undefined control sequence.
-l.125             \subsubsubsection
-                                   {Software Interface}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-d:/Codes/Software Engineering Project/TestCraft/Requirement Analysis Document/main.tex:126: Undefined control sequence.
-l.126             \subsubsubsection
-                                   {Hardware Interface}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-[4] (main.aux)
+ [5] (main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  7FC5B8F51A984865F04E05E5611F11BE;4793.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 7FC5B8F51A984865F04E05E5611F11BE;4793.
  ) 
 Here is how much of TeX's memory you used:
- 8847 strings out of 474542
- 138653 string characters out of 5744447
- 1930978 words of memory out of 5000000
- 30969 multiletter control sequences out of 15000+600000
- 560487 words of font info for 44 fonts, out of 8000000 for 9000
+ 8913 strings out of 474542
+ 139873 string characters out of 5744447
+ 1936978 words of memory out of 5000000
+ 31021 multiletter control sequences out of 15000+600000
+ 563267 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,5n,79p,354b,450s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on main.pdf (5 pages, 180718 bytes).
+ 75i,5n,79p,419b,499s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\mahmu\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/mahmu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+Output written on main.pdf (6 pages, 210301 bytes).
 PDF statistics:
- 98 PDF objects out of 1000 (max. 8388607)
- 40 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 244 PDF objects out of 1000 (max. 8388607)
+ 41 named destinations out of 1000 (max. 500000)
+ 278 words of extra memory for PDF output out of 10000 (max. 10000000)
 
