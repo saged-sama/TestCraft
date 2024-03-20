@@ -1,4 +1,5 @@
 -- users: This table is the basic user data. Another userinfo table is used for storing other essential user data
+CREATE DATABASE IF NOT EXISTS testcraft;
 CREATE TABLE IF NOT EXISTS users(
     id VARCHAR(255) PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
