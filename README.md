@@ -33,7 +33,7 @@ source path/you/just/copied;
 
 You can also first go to `TestCraft/database/` directory, open up terminal in that directory, open up `MySQL` terminal, and run:
 ```bash
-source mysqlDB.sql
+source mysqlDB.sql;
 ```
 
 - <b>Database Variables</b> <br>
