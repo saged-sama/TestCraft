@@ -4,8 +4,8 @@ const cors = require('cors');
 const users = require('./src/users');
 
 // Globals
-const HOST = process.env.HOSTNAME;
-const PORT = process.env.PORT;
+const HOSTNAME = "localhost";
+const PORT = 8000;
 
 // MiddleWares
 function handleMiddleWares(app){
@@ -16,13 +16,13 @@ function handleMiddleWares(app){
 // Main function
 function main(){
     const app = express();
-
     handleMiddleWares(app);
-    const usersInstance = new users(app);
-
+    
     app.listen(PORT, async ()=>{
-        console.log(`Server running on: ${HOST}:${PORT}`);
+        console.log(`Server running on: http://${HOSTNAME}:${PORT}`);
     });
+
+    const usersInstance = new users(app);
 }
 
 main();
