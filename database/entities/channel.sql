@@ -1,16 +1,8 @@
 create table if not exists channel(
-    id varchar(36) not null primary key,
-    name varchar(20)
+    id char(36) not null primary key,
+    channelName varchar(20),
+    channelOwner char(36) not null,
+    dateCreated datetime,
+    foreign key (channelOwner) references user(id)
 );
 
-delimiter //
-
-create procedure if not exists addchannel(
-    in p_name varchar(20)
-)
-begin
-    insert into channel(id, name)
-    values(uuid(), p_name);
-end//
-
-delimiter ;
