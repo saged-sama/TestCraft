@@ -28,12 +28,12 @@ This will create a `TestCraft` project directory with all the project files
 
 Open up `MySQL` local server in terminal and login using your credentials. Copy the path to the `testcraft.sql` file which you'll find inside `TestCraft/database/` directory. And then run:
 ```bash
-source path/you/just/copied;
+source path/you/just/copied
 ```
 
 You can also first go to `TestCraft/database/` directory, open up terminal, open and login to `MySQL` terminal, and run:
 ```bash
-source testcraft.sql;
+source testcraft.sql
 ```
 
 - <b>Database Variables</b> <br>
