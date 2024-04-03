@@ -19,6 +19,8 @@ source rels_funct/testAnswers.sql
 source rels_funct/teachers.sql
 source rels_funct/students.sql
 source rels_funct/assessment.sql
+source rels_funct/invitation.sql
+source rels_funct/request.sql
 
 -- add functionalities
 source func_proc/authentications.sql
