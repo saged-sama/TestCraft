@@ -1,7 +1,6 @@
-const { json } = require('body-parser');
-const database = require('./database');
+import database from "./database.mjs";
 
-class users{
+export default class users{
     constructor(app){
         this.database = new database();
         this.adduser = 'call adduser(?, ?, ?, ?)';
@@ -12,8 +11,7 @@ class users{
             try{
                 const user = req.body;
                 const response = await this.database.connection.promise().execute(this.adduser, [user.username, user.password, user.email, user.phone]);
-                // console.log("adduser procedure signup successful", response);
-                // console.log(fields);
+                
                 return res.status(200).json({
                     message: "sign-up successful"
                 });
@@ -29,17 +27,17 @@ class users{
         // login to existing id
         app.post("/log-in", async (req, res) => {   
             try{
+                // console.log(req.body);
                 const user = req.body;
                 const [rows, fields] = await this.database.connection.promise().query(this.authenticate, [user.username, user.password]);
-                // console.log(rows);
-                // console.log(`authenticate(\'${user.username}\', \'${user.password}\')`);
+                
                 let jsonres = rows[0][`authenticate(\'${user.username}\', \'${user.password}\')`];
-                if(jsonres == "0"){
+                if(jsonres === "0"){
                     return res.status(401).json({
                         message: "Invalid credentials"
                     });
                 }
-                jsonres = JSON.parse(jsonres);
+                jsonres = await JSON.parse(jsonres);
                 // console.log(jsonres);
                 return res.status(200).json(jsonres);
             } catch(err){
@@ -56,5 +54,3 @@ class users{
         console.log("connection closed!!");
     }
 }
-
-module.exports = users;
