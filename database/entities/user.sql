@@ -19,5 +19,5 @@ create table if not exists userDetails(
     profilepicture varchar(255),
     about longtext,
     experience longtext,
-    foreign key (userid) references user(id)
+    foreign key (userid) references user(id) on delete cascade
 );

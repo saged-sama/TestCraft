@@ -5,8 +5,8 @@ create table if not exists mcq(
     mcqDesc longtext not null,
     options text not null,
     solution longtext,
-    creatorID char(36) not null,
+    creatorID char(36),
     creationTime datetime,
     lastEdit datetime,
-    foreign key (creatorID) references user(id)
+    foreign key (creatorID) references user(id) on delete set null
 );

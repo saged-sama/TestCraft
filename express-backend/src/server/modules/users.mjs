@@ -1,25 +1,36 @@
-import database from "./database.mjs";
-
 export default class users{
-    constructor(app){
-        this.database = new database();
-        this.adduser = 'call adduser(?, ?, ?, ?)';
-        this.authenticate = 'select authenticate(?, ?)';
+    constructor(app, database){
+        this.addUser = 'call adduser(?, ?, ?, ?)';
+        this.authenticate = 'select authenticate(?, ?) as auth';
+        this.usernameavailable = 'select count(username) as cnt from user where username = ?';
 
         // sign up new user
-        app.post("/sign-up", async (req, res) => {
+        app.put("/sign-up", async (req, res) => {
             try{
                 const user = req.body;
-                const response = await this.database.connection.promise().execute(this.adduser, [user.username, user.password, user.email, user.phone]);
-                
+                await database.connection.promise().execute(this.addUser, [user.username, user.password, user.email, user.phone]);
                 return res.status(200).json({
                     message: "sign-up successful"
                 });
             } catch(err){
                 console.error('Error signing up: ', err);
                 return res.status(500).json({
-                    message: "sign-up unsuccessful",
-                    error: err
+                    error: "sign-up unsuccessful"
+                });
+            }
+        });
+
+        app.post("/available-username", async (req, res) => {
+            try{
+                const { username } = req.body;
+                const [rows, _] = await database.connection.promise().query(this.usernameavailable, [username]);
+                const cnt = rows[0]['cnt'];
+                return res.status(200).json({
+                    cnt: cnt
+                });
+            } catch(err){
+                return res.status(400).json({
+                    error: "Could not check availability"
                 });
             }
         });
@@ -27,30 +38,34 @@ export default class users{
         // login to existing id
         app.post("/log-in", async (req, res) => {   
             try{
-                // console.log(req.body);
                 const user = req.body;
-                const [rows, fields] = await this.database.connection.promise().query(this.authenticate, [user.username, user.password]);
+                const [rows, _] = await database.connection.promise().query(this.authenticate, [user.username, user.password]);
                 
-                let jsonres = rows[0][`authenticate(\'${user.username}\', \'${user.password}\')`];
-                if(jsonres === "0"){
+                let jsonRes = rows[0]['auth'];
+                if(jsonRes === "0"){
                     return res.status(401).json({
-                        message: "Invalid credentials"
+                        error: "Invalid credentials"
                     });
                 }
-                jsonres = await JSON.parse(jsonres);
-                // console.log(jsonres);
-                return res.status(200).json(jsonres);
+                jsonRes = await JSON.parse(jsonRes);
+                return res.status(200).json(jsonRes);
             } catch(err){
-                console.error("Error. Could not authenticate: ", err);
+                console.error("Could not authenticate: ", err);
                 return res.status(500).json({
-                    error: err
+                    error: "Could not authenticate"
                 });
             }
         });
-    }
 
-    close(){
-        this.database.close();
-        console.log("connection closed!!");
+        // app.post("/log-out", async (req, res) => {
+        //     try{
+        //         const user = req.body;
+        //     } catch(err){
+        //         console.error("Could not log out: ", err);
+        //         return res.status(400).json({
+        //             error: "Could not logout"
+        //         });
+        //     }
+        // });
     }
 }

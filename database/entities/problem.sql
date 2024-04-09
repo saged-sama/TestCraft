@@ -4,8 +4,8 @@ create table if not exists problem(
     topics varchar(255) not null,
     probDesc longtext not null,
     solution longtext,
-    creatorID char(36) not null,
+    creatorID char(36),
     creationTime datetime,
     lastEdit datetime,
-    foreign key (creatorID) references user(id)
+    foreign key (creatorID) references user(id) on delete set null
 );
