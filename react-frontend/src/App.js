@@ -1,25 +1,26 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from "./Components/Home"
-import Navbar from './Components/Navbar'
-import CreateExam from "./Exam/CreateExam"
-import TakeExam from "./Exam/TakeExam"
+import { AuthProvider } from './lib/AuthProvider';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AppControlProvider } from './lib/AppControlProvider';
+import Home from './app/home';
+import Authentication from './app/authentication';
+import Console from './app/console';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <div className="content">
-          <Navbar />
-          <Routes>
-            <Route path="/" element = {<Home />} />
-            <Route path="/Create-Exam" element = {<CreateExam />} />
-            <Route path="/Take-Exam" element = {<TakeExam />} />
-          </Routes>
-        </div>
-
-      </div>
-    </Router>
+    <div data-theme="newtheme" className="font-landing">
+      <AuthProvider>
+        <AppControlProvider>
+          <Router>
+            <Routes>
+              <Route path="/*" element={<Home />}/>
+              <Route path="/auth/*" element={<Authentication />}/>
+              <Route path="/app/*" element={<Console />}/>
+            </Routes>
+          </Router>
+        </AppControlProvider>
+      </AuthProvider>
+    </div>
   );
 }
+
 export default App;
