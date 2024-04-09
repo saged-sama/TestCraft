@@ -1,5 +1,5 @@
 import {Routes, Route} from "react-router-dom";
-import AuthNavbar from "../../components/AuthNavbar";
+import AuthNavbar from "./AuthNavbar";
 import Login from "./Login";
 import Register from "./Register";
 

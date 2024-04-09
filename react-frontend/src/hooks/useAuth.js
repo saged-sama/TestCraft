@@ -17,7 +17,7 @@ export default function useAuth () {
             else{
                 const resp = await response.json();
                 Cookies.set('userID', resp.userID);
-                Cookies.set('authToken', resp.authTkn);
+                Cookies.set('authToken', resp.authToken);
                 return true;
             }
         } catch(err){
@@ -47,6 +47,7 @@ export default function useAuth () {
     }
 
     const logout = () => {
+        Cookies.remove('userid');
         Cookies.remove('authToken');
     };
 

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import {BookOpen, Pyramid} from "lucide-react";
-import Logo from "../assets/test-svgrepo-com.svg";
+import Logo from "../../assets/test-svgrepo-com.svg";
 
 export default function HomeNavbar() {
     return (
-        <nav className="relative container mx-auto p-2 md:p-6">
+        <nav className="relative border-b-4 rounded-3xl container mx-auto p-2 md:p-6">
             <div className="flex items-center justify-between">
                 <Link to="/" className='pt-2 flex hover:bg-neutral p-2 rounded-lg gap-1'>
                     <img src={Logo} alt="logo" className="md:w-11 md:h-11 w-8 h-8" />
@@ -26,7 +26,7 @@ export default function HomeNavbar() {
                 </div>
                 <Link to="/auth/register" className='hidden md:btn btn-md btn-primary'>Get Started</Link>
                 <div className="md:hidden dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-primary btn-sm rounded-btn"> Get Started </div>
+                    <div tabIndex={0} role="button" className="btn btn-primary btn-sm rounded-l-btn"> Get Started </div>
                     <ul tabIndex={0} className="menu border dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box mt-4">
                         <li><Link to="/auth/register">Register</Link></li>
                         <li><Link to='/documentation'>Documentation</Link></li>
