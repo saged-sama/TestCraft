@@ -75,3 +75,8 @@ In the time of development the versions are:
 - `Node.js` `v21.6.1`
 - `MySQL` `v8.2.0`
 - `Tailwind` `v3.4.1`
+
+## Tool Used to Create all the Diagram
+
+- Class Diagram: [`https://app.diagrams.net`](https://app.diagrams.net)
+- ER Diagram: [`https://dbdiagram.io/`](https://dbdiagram.io/)
