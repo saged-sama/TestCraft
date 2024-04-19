@@ -11,7 +11,10 @@ import collections from "./modules/collections.mjs";
 
 const useMiddleWares = (app) => {
     app.use(bodyParser.json());
-    app.use(cors());
+    app.use(cors({
+        origin: 'http://localhost:3000',
+        credentials: true
+    }));
     app.use(cookieParser());
 }
 

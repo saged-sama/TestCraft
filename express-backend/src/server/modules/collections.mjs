@@ -2,9 +2,10 @@ import isAuthenticated from "../lib/checkAuth.mjs";
 
 export default class collections{
     constructor(app, database) {
-        this.addCollection = 'select addcollection(?, ?) as newCollection';
+        this.addCollection = 'call addcollection(?, ?)';
         this.renamecollection = 'update collections set collectionName = ? where id = ?';
         this.removecollection = 'call removecollection(?, ?)';
+        this.getAllCollectionsByUserId = 'call getAllCollectionsByUserID(?)';
 
         app.post("/create-collection", async (req, res) => {
             try{
@@ -16,11 +17,9 @@ export default class collections{
                     });
                 }
                 const { collectionName } = req.body;
-                const [rows, _] = await database.connection.promise().query(this.addCollection, [collectionName, userID]);
-                const collectionID = rows[0]['newCollection'];
+                await database.connection.promise().execute(this.addCollection, [collectionName, userID]);
                 return res.status(200).json({
-                    message: "Successfully created a New Collection",
-                    collectionID: collectionID
+                    message: "Successfully created a New Collection"
                 });
             } catch(err){
                 console.log("Could not create collection: ", err);
@@ -54,6 +53,28 @@ export default class collections{
                 console.error("Could not rename collection: ", err);
                 return res.status(500).json({
                     error: "Could not rename collection"
+                });
+            }
+        });
+
+        app.get("/get-all-collections-by-user-id", async(req, res) => {
+            try{
+                const { userID, authToken } = req.cookies;
+                let isAuthorized = await isAuthenticated({userID, authToken}, database);
+
+                if(!isAuthorized){
+                    return res.status(401).json({
+                        error: "Unauthorized action"
+                    });
+                }
+
+                const [rows, _] = await database.connection.promise().query(this.getAllCollectionsByUserId, [userID]);
+
+                return res.status(200).json(rows[0]);
+            } catch(err){
+                console.error("Error fetching all collections: ", err);
+                return res.status(404).json({
+                    error: "Could not get collections"
                 });
             }
         });

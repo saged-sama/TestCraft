@@ -23,7 +23,7 @@ begin
     insert into user(id, username, psswrd, email, phone, dateCreated)
     values(newUserID, p_username, hashed_pass, p_email, p_phone, now());
 
-    insert into userDetails(userid) values(newUserID);
+    insert into userDetails(userid, usersName) values(newUserID, "[No Name]");
 
     insert into authentications(userid, authToken, expireTime)
     values(newUserID, newAuthToken, newExpDate);

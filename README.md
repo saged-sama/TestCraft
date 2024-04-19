@@ -9,7 +9,7 @@ We've chosen to use a full `JavaScript` stack that uses
 - `React` in the frontend
 - `Express` in the backend
 - `MySQL` local server for database
-- `JSX` with `Tailwind` for designing
+- `JSX` with `TailwindCSS` for designing
 
 
 ## Installation
@@ -51,7 +51,7 @@ DB_DATABASE = "testcraft"        # you don't need to change this
 Open terminal in the project `TestCraft/express-backend/` directory. Run:
 ```bash
 npm install         # install dependencies
-npm start           # run backend server
+npm run dev           # run backend server
 ```
 
 - <b>Frontend Installation and Run</b> <br>
@@ -61,7 +61,7 @@ Open terminal in the project `TestCraft/react-frontend/` directory. Run:
 npm install           # install dependencies
 
 # either
-npm run dev           # test frontend server
+npm start           # test frontend server
 # or
 npm run build         # build project
 ```

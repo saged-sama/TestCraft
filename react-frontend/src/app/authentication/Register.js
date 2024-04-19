@@ -15,6 +15,7 @@ export default function Register(){
             email: data.email,
             phone: data.phone
         };
+        console.table(user);
         const isSignedUp = await signup(user);
         if(isSignedUp){
             navigate("/auth/login");

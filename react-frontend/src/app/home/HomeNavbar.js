@@ -4,7 +4,7 @@ import Logo from "../../assets/test-svgrepo-com.svg";
 
 export default function HomeNavbar() {
     return (
-        <nav className="relative border-b-4 rounded-3xl container mx-auto p-2 md:p-6">
+        <nav className="relative border-b-4 rounded-3xl md:border-0 container mx-auto p-2 md:p-6">
             <div className="flex items-center justify-between">
                 <Link to="/" className='pt-2 flex hover:bg-neutral p-2 rounded-lg gap-1'>
                     <img src={Logo} alt="logo" className="md:w-11 md:h-11 w-8 h-8" />
