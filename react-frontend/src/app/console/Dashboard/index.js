@@ -1,19 +1,34 @@
 import { Routes, Route, Link } from "react-router-dom";
 import ManageCollections from "./ManageCollections";
+import { ChevronRight } from "lucide-react";
 
 export default function Dashboard() {
 
     return (
-        <div className="flex h-full">
-            <div className="hidden md:flex flex-col items-center mt-10 p-8 w-1/4 border-r-4 border-stone-500 rounded-xl">
-                <Link to="/app/dashboard/manageCollections" className="border-b-4 px-10 py-2 my-2 hover:bg-neutral rounded-lg">Manage Collections</Link>
-                <Link className="border-b-4 px-10 py-2 my-2 hover:bg-neutral rounded-lg">Manage Channels</Link>
-                <Link className="border-b-4 px-10 py-2 my-2 hover:bg-neutral rounded-lg">Get Analysis</Link>
-            </div>
-            <div className="rounded w-3/4">
-                <Routes>
-                    <Route path="/manageCollections/*" element={<ManageCollections />} />
-                </Routes>
+        <div className="flex flex-col lg:px-40 lg:py-16 gap-2">
+            <h1 className="hidden lg:block text-3xl lg:px-20">Dashboard</h1>
+            <div>
+                <div className="drawer lg:drawer-open">
+                    <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+                    <div className="drawer-content flex flex-col items-start">
+                        {/* Page content here */}
+                        <label htmlFor="my-drawer-2" className="flex m-2 justify-center items-center w-50 drawer-button lg:hidden gap-1"> <ChevronRight className="w-5 h-5 border-2 rounded-xl" /> Collections </label>
+                        <div className="flex items-center justify-center rounded w-full">
+                            <Routes>
+                                <Route path="/manageCollections/*" element={<ManageCollections />} />
+                            </Routes>
+                        </div>
+                    </div>
+                    <div className="drawer-side">
+                        <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
+                        <ul className="menu p-4 w-80 h-screen bg-base-200 text-base-content">
+                            {/* Sidebar content here */}
+                            <Link to="/app/dashboard/manageCollections" className="btn btn-ghost">Manage Collections</Link>
+                            <Link className="btn btn-ghost">Manage Channels</Link>
+                            <Link className="btn btn-ghost">Get Analysis</Link>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     );

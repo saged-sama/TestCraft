@@ -33,9 +33,9 @@ export default function ManageCollections() {
     }
 
     return (
-        <div className="flex flex-col m-10 p-10 gap-2">
+        <div className="flex flex-col mx-5 gap-2 w-full">
             {/* Header */}
-            <div className="border-b-2 flex">
+            <div className="hidden border-b-2 lg:flex">
                 <h1 className="text-xl">Collections</h1>
             </div>
             <div className="flex flex-col-reverse md:flex-row justify-between items-center">
@@ -44,7 +44,7 @@ export default function ManageCollections() {
                     {newCollection && <span className="flex items-center gap-1"><SquareX className="w-4 h-4" /> Cancel</span>}
                 </button>
 
-                <label className="input input-bordered w-1/2 flex items-center gap-2">
+                <label className="hidden input input-bordered md:w-1/2 md:flex items-center gap-2">
                     <input type="text" className="grow" placeholder="Search Collections..." />
                     <Search />
                 </label>

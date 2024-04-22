@@ -8,9 +8,9 @@ export default class database {
                 // user: import.meta.env.DB_USER,
                 // password: import.meta.env.DB_PASSWORD,
                 // database: import.meta.env.DB_DATABASE
-                host: "localhost",
-                user: "root",
-                password: "notadoctor",
+                host: "172.29.176.1",
+                user: "amaterasu",
+                password: "amaterasu",
                 database: "testcraft"
             };
             this.connection = mysql.createConnection(this.dbConfig);
