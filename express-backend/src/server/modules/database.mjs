@@ -8,9 +8,9 @@ export default function database() {
             // user: import.meta.env.DB_USER,
             // password: import.meta.env.DB_PASSWORD,
             // database: import.meta.env.DB_DATABASE
-            host: "172.29.176.1",
-            user: "amaterasu",
-            password: "amaterasu",
+            host: "127.0.0.1",
+            user: "root",
+            password: "33013301",
             database: "testcraft"
         };
         connection = mysql.createConnection(dbConfig);
