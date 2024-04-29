@@ -1,3 +1,4 @@
+import collection from "../objects/collection.mjs";
 import user from "../objects/user.mjs";
 
 export default function collections(app, database) {
@@ -34,8 +35,7 @@ export default function collections(app, database) {
             let isAuthorized = await user(userID, authToken, database).isAuthorized();
 
             const { collectionID, newName } = req.body
-            const [rows, _] = await database.connection.promise().query('select ownerID from collections where id = ?', [collectionID]);
-            const ownerID = rows[0]["ownerID"];
+            const ownerID = await collection(collectionID, database).getOwner();
 
             isAuthorized = isAuthorized && (ownerID === userID);
             if (!isAuthorized) {
@@ -77,13 +77,20 @@ export default function collections(app, database) {
         }
     });
 
+    app.get("/get-collection-by-id", async (req, res) => {
+        try{
+
+        } catch(err){
+            console.log("Could not get collection by id");
+        }
+    });
+
     app.delete("/remove-collection", async (req, res) => {
         try {
             const { userID, authToken } = req.cookies;
             let isAuthorized = await user(userID, authToken, database).isAuthorized();
             const { collectionID } = req.body
-            const [rows, _] = await database.connection.promise().query('select ownerID from collections where id = ?', [collectionID]);
-            const ownerID = rows[0]["ownerID"];
+            const ownerID = await collection(collectionID, database).getOwner();
 
             isAuthorized = isAuthorized && (ownerID === userID);
             if (!isAuthorized) {
@@ -101,6 +108,36 @@ export default function collections(app, database) {
             return res.status(500).json({
                 error: "Could not remove collection"
             });
+        }
+    });
+
+    app.post("/share-collection-with-user", async(req, res) => {
+        try{
+            const { userID, authToken } = req.cookies;
+            let isAuthorized = await user(userID, authToken, database).isAuthorized();
+
+            const {collectionID, username} = req.body;
+            const ownerID = await collection(collectionID, database).getOwner();
+            
+            if(ownerID !== userID || !isAuthorized){
+                return res.status(401).json({
+                    error: "Unauthorized action"
+                });
+            }
+
+            const [rows, _] = await database.connection.promise().query("select id from user where username = ?", [username]);
+            const newUserID = rows[0]["id"];
+
+            await database.connection.promise().execute("insert into collectionAccess values(?, ?)", [newUserID, collectionID]);
+            return res.status(200).json({
+                message: "Successfully added permission"
+            })
+        }
+        catch(err){
+            console.error("Could not share collection with user: ", err);
+            return res.status(400).json({
+                message: "Could not share collection with user"
+            })
         }
     });
 }

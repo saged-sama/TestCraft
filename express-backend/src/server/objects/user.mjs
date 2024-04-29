@@ -1,5 +1,4 @@
 export default function user(userID, authToken, database){
-
     async function isAuthorized() {
         try{
             const isAuthed = 'select isAuthenticated(?, ?) as authed';
@@ -23,11 +22,5 @@ export default function user(userID, authToken, database){
             return {};
         }
     }
-
-    // async updateUserDetails(update, database){
-    //     try{
-    //         const 
-    //     }
-    // }
     return { isAuthorized, getUserDetails };
 };

@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 export default function Dashboard() {
 
     return (
-        <div className="flex flex-col lg:px-40 lg:py-16 gap-2">
+        <div className="flex flex-col lg:px-auto lg:py-auto gap-2 overflow-hidden">
             <h1 className="hidden lg:block text-3xl lg:px-20">Dashboard</h1>
             <div>
                 <div className="drawer lg:drawer-open">
@@ -13,7 +13,7 @@ export default function Dashboard() {
                     <div className="drawer-content flex flex-col items-start">
                         {/* Page content here */}
                         <label htmlFor="my-drawer-2" className="flex m-2 justify-center items-center w-50 drawer-button lg:hidden gap-1"> <ChevronRight className="w-5 h-5 border-2 rounded-xl" /> Collections </label>
-                        <div className="flex items-center justify-center rounded w-full">
+                        <div className="flex justify-center rounded w-full h-full">
                             <Routes>
                                 <Route path="/manageCollections/*" element={<ManageCollections />} />
                             </Routes>
