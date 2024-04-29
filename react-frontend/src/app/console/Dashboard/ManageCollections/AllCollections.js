@@ -57,7 +57,7 @@ export default function AllCollections(props) {
         <div className="gap-5">
             {collections.map(collection => {
                 return (
-                    <div key={collection.collectionID} className="card border-t-2 card-compact text-md font-normal w-3/5 m-5 bg-base-100 shadow-xl">
+                    <div key={collection.collectionID} className="card border-t-2 card-compact text-md font-normal w-full m-5 bg-base-100 shadow-xl">
                         <div className="card-body">
                             <div className="card-title text-sm justify-between">
                                 <div className="flex ">
@@ -78,7 +78,7 @@ export default function AllCollections(props) {
                             <div className="card-actions justify-end">
                                 <button className="btn btn-neutral btn-sm" title="Share"><Share className="w-4 h-4" /></button>
                                 <button className="btn btn-neutral btn-sm" title="Edit"><Edit className="w-4 h-4" /> </button>
-                                <button className="btn btn-neutral btn-sm" title="Delete"><Trash2 className="w-4 h-4" onClick={() => deleteCollection(collection.collectionID)}/> </button>
+                                <button className="btn btn-neutral btn-sm" title="Delete" onClick={() => deleteCollection(collection.collectionID)}><Trash2 className="w-4 h-4"/> </button>
                             </div>
                         </div>
                     </div>

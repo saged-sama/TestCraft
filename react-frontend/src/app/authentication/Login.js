@@ -39,7 +39,7 @@ export default function Login() {
             <form onSubmit={handleSubmit(loginUser)} className="flex flex-col items-center gap-3">
                 <label className="input input-bordered flex items-center">
                     <User className="w-4 h-4"/>
-                    <input {...register("username")} type="text" className="grow md:input-lg input-sm" placeholder="Username" />
+                    <input {...register("username")} type="text" className="grow md:input-lg input-sm" placeholder="username" />
                 </label>
                 <label className="input input-bordered flex items-center">
                     <KeyRound className="w-4 h-4"/>

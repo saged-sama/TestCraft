@@ -35,19 +35,19 @@ export default function Register(){
             <form onSubmit={handleSubmit(signupUser)} className="flex flex-col items-center gap-3">
                 <label className="input input-bordered flex items-center">
                     <Mail className="w-4 h-4"/>
-                    <input {...register("email")} type="text" className="grow md:input-lg input-sm" placeholder="Email" />
+                    <input {...register("email")} type="text" className="grow md:input-lg input-sm" placeholder="email" />
                 </label>
                 <label className="input input-bordered flex items-center">
                     <Phone className="w-4 h-4"/>
-                    <input {...register("phone")} type="text" className="grow md:input-lg input-sm" placeholder="Phone" />
+                    <input {...register("phone")} type="text" className="grow md:input-lg input-sm" placeholder="phone" />
                 </label>
                 <label className="input input-bordered flex items-center">
                     <User className="w-4 h-4"/>
-                    <input {...register("username")} type="text" className="grow md:input-lg input-sm" placeholder="Username" />
+                    <input {...register("username")} type="text" className="grow md:input-lg input-sm" placeholder="username" />
                 </label>
                 <label className="input input-bordered flex items-center">
                     <KeyRound className="w-4 h-4"/>
-                    <input {...register("password")} type="password" className="grow md:input-lg input-sm" placeholder="Password" autoComplete="off"/>
+                    <input {...register("password")} type="password" className="grow md:input-lg input-sm" placeholder="password" autoComplete="off"/>
                 </label>
                 <button className="btn btn-secondary md:btn-md btn-sm w-full" type="submit">Sign up</button>
             </form>

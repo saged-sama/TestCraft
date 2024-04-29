@@ -27,11 +27,10 @@ function main(){
     const app = express();
     useMiddleWares(app);
 
-    const databaseInstance = new database();
-
-    const usersInstance = new users(app, databaseInstance);
-    const channelsInstance = new channels(app, databaseInstance);
-    const collectionInstance = new collections(app, databaseInstance);
+    const databaseInstance = database();
+    users(app, databaseInstance);
+    channels(app, databaseInstance);
+    collections(app, databaseInstance);
 
     ViteExpress.listen(app, PORT, async ()=>{
         console.log(`Server running on: http://${HOSTNAME}:${PORT}`);

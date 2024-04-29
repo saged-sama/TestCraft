@@ -21,7 +21,7 @@ export default function Dashboard() {
                     </div>
                     <div className="drawer-side">
                         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                        <ul className="menu p-4 w-80 h-screen bg-base-200 text-base-content">
+                        <ul className="menu p-4 w-3/5 sm:w-1/3 lg:w-80 h-full bg-base-200 text-base-content">
                             {/* Sidebar content here */}
                             <Link to="/app/dashboard/manageCollections" className="btn btn-ghost">Manage Collections</Link>
                             <Link className="btn btn-ghost">Manage Channels</Link>

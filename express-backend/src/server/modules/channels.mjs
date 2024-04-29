@@ -1,16 +1,15 @@
-import isAuthenticated from "../lib/checkAuth.mjs";
+import user from "../objects/user.mjs";
 
-export default class channels{
-    constructor(app, database){
-        this.addchannel = 'call addchannel(?, ?)';
-        this.removechannel = 'call removechannel(?)';
-        this.channelowner = 'select channelOwner from channel where id = ?';
+export default function channels(app, database){
+        const addchannel = 'call addchannel(?, ?)';
+        const removechannel = 'call removechannel(?)';
+        const channelowner = 'select channelOwner from channel where id = ?';
 
         // Add channel
         app.put("/add-channel", async (req, res) => {
             try{
                 const { userID, authToken } = req.cookies;
-                const isAuthorized = await isAuthenticated({ userID, authToken }, database);
+                const isAuthorized = await user(userID, authToken, database).isAuthorized();
                 // console.log(isAuthorized);
                 if(!isAuthorized){
                     return res.status(401).json({
@@ -18,7 +17,7 @@ export default class channels{
                     });
                 }
                 const { channelName, ownerID } = req.body;
-                await database.connection.promise().execute(this.addchannel, [channelName, ownerID]);
+                await database.connection.promise().execute(addchannel, [channelName, ownerID]);
                 return res.status(200).json({
                     message: "Channel added successfully"
                 });
@@ -33,9 +32,9 @@ export default class channels{
         app.delete("/delete-channel", async (req, res) => {
             try{
                 const { userID, authToken } = req.cookies;
-                let isAuthorized = await isAuthenticated({ userID, authToken }, database);
+                let isAuthorized = await  user(userID, authToken, database).isAuthorized();
                 const { channelid } = req.body;
-                const [rows, _] = await database.connection.promise().query(this.channelowner, [channelid]);
+                const [rows, _] = await database.connection.promise().query(channelowner, [channelid]);
                 const ownerID = rows[0]["channelOwner"];
 
                 isAuthorized = isAuthorized && (ownerID === userID);
@@ -45,7 +44,7 @@ export default class channels{
                         error: "Could not delete the channel"
                     });
                 }
-                await database.connection.promise().execute(this.removechannel, [channelid]);
+                await database.connection.promise().execute(removechannel, [channelid]);
                 return res.status(200).json({
                     message: "Successfully deleted channel"
                 });
@@ -57,4 +56,3 @@ export default class channels{
             }
         });
     }
-}
