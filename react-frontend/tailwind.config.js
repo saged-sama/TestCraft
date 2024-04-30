@@ -19,13 +19,13 @@ module.exports = {
 
           "secondary": "#34d399",
 
-          "accent": "#2dd4bf",
+          "accent": "#f59e0b",
 
           "neutral": "#d1d5db",
 
           "base-100": "#f5f5f4",
 
-          "info": "#67e8f9",
+          "info": "#6366f1",
 
           "success": "#00ff00",
 

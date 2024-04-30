@@ -7,6 +7,8 @@ source entities/collections.sql
 source entities/problem.sql
 
 -- create necessary relationships between the entities
+source rels_funct/collectionProblems.sql
+source rels_funct/collectionAccess.sql
 
 -- add functionalities
 source func_proc/authentications.sql

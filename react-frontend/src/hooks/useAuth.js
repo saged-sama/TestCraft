@@ -4,7 +4,9 @@ export default function useAuth () {
 
     const login = async (user) => {
         try {
-            const response = await fetch(process.env.REACT_APP_LOGIN_API, {
+            const APIRoot = process.env.REACT_APP_API_ROOT;
+            const loginAPI = process.env.REACT_APP_LOGIN_API;
+            const response = await fetch(APIRoot + loginAPI, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

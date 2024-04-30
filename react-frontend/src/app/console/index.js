@@ -20,7 +20,7 @@ export default function Console(){
     return (
         <div>
             <Navbar />
-            <div className="h-screen overflow-hidden">
+            <div className="h-full">
                 <Routes>
                     <Route exact path="/" element={<Dashboard />}/>
                     <Route path="/dashboard/*" element={<Dashboard />}/>

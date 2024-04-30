@@ -7,7 +7,7 @@ import Console from './app/console';
 
 function App() {
   return (
-    <div data-theme="dracula" className="font-landing">
+    <div data-theme="newtheme" className="font-landing">
       <AuthProvider>
         <AppControlProvider>
           <Router>

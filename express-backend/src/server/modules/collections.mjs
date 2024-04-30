@@ -79,9 +79,28 @@ export default function collections(app, database) {
 
     app.get("/get-collection-by-id", async (req, res) => {
         try{
+            const { userID, authToken } = req.cookies;
+            let isAuthorized = await user(userID, authToken, database).isAuthorized();
+            const {collectionID} = req.query;
 
+            const permission = await collection(collectionID, database).getPermission(userID);
+            if (!isAuthorized || !permission) {
+                return res.status(401).json({
+                    error: "Unauthorized action"
+                });
+            }
+            
+            const [rows, _] = await database.connection.promise().query("select * from collections where id = ?", [collectionID]);
+            const coll = rows[0];
+            // console.log(coll);
+            return res.status(200).json({
+                collection: coll
+            });
         } catch(err){
-            console.log("Could not get collection by id");
+            console.log("Could not get collection by id: ", err);
+            return res.status(404).json({
+                error: "Collection not found"
+            })
         }
     });
 

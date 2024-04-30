@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 export default function Dashboard() {
 
     return (
-        <div className="flex flex-col lg:px-auto lg:py-auto gap-2 overflow-hidden">
+        <div className="flex flex-col h-full lg:px-auto lg:py-auto gap-2 overflow-hidden">
             <h1 className="hidden lg:block text-3xl lg:px-20">Dashboard</h1>
             <div>
                 <div className="drawer lg:drawer-open">
