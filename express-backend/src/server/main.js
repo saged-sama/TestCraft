@@ -3,6 +3,9 @@ import ViteExpress from "vite-express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 import database from "./modules/database.mjs";
 import users from "./modules/users.mjs";

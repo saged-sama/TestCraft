@@ -4,14 +4,10 @@ export default function database() {
     let connection;
     try {
         const dbConfig = {
-            // host: import.meta.env.DB_HOST,
-            // user: import.meta.env.DB_USER,
-            // password: import.meta.env.DB_PASSWORD,
-            // database: import.meta.env.DB_DATABASE
-            host: "127.0.0.1",
-            user: "root",
-            password: "33013301",
-            database: "testcraft"
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE
         };
         connection = mysql.createConnection(dbConfig);
         connection.connect((err) => {
