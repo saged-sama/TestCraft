@@ -5,14 +5,14 @@ import Register from "./Register";
 import { useEffect } from "react";
 import { isAuthenticated } from "../../lib/authenticate";
 
-export default function Authentication(){
+export default function Authentication() {
     const navigate = useNavigate();
     useEffect(() => {
         if(isAuthenticated()){
             navigate("/app/dashboard/manageCollections");
         }
     })
-
+    
     return (
         <div>
             <AuthNavbar />

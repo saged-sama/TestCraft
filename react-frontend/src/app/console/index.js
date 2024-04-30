@@ -5,6 +5,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../lib/AuthProvider";
 import Profile from "./Profile";
+import Exam from './Exam';
 
 export default function Console(){
     const { loginState } = useContext(AuthContext);
@@ -26,6 +27,8 @@ export default function Console(){
                     <Route path="/dashboard/*" element={<Dashboard />}/>
                     <Route path="/explore/*" element={<Explore />}/>
                     <Route path="/profile" element={<Profile />}/>
+                    <Route exact path="/Exam/*" element={<Exam />}/>
+                    
                 </Routes>
             </div>
         </div>

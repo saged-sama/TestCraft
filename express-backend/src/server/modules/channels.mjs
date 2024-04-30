@@ -1,6 +1,6 @@
 import user from "../objects/user.mjs";
 
-export default function channels(app, database){
+export default function channels(app, database) {
         const addchannel = 'call addchannel(?, ?)';
         const removechannel = 'call removechannel(?)';
         const channelowner = 'select channelOwner from channel where id = ?';
@@ -55,4 +55,4 @@ export default function channels(app, database){
                 });
             }
         });
-    }
+}
