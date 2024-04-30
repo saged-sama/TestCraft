@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { dateExtractFromMySQLDateTime } from "../../../../lib/useDate";
-import { CirclePlus, Search } from "lucide-react";
+import { CirclePlus, Search, X } from "lucide-react";
 import { addNewProblem, addProblemToCollection } from "../../../../lib/problem";
 import Problems from "./Problems";
 import ProblemMenu from "./ProblemMenu";
+import { remarkableKatexRender } from "../../../../lib/InlineMath";
 
 export default function Collection() {
     const { collectionID } = useParams();
@@ -19,12 +20,11 @@ export default function Collection() {
         renderedSolution: ""
     });
 
-    
+
     const getProblemsByCollection = async (collectionID) => {
         try {
             const APIRoot = process.env.REACT_APP_API_ROOT;
             const getProblemsByCollectionAPI = process.env.REACT_APP_GET_PROBLEMS_BY_COLLECTIONS;
-            console.log(APIRoot + getProblemsByCollectionAPI + `?collectionID=${collectionID}`);
             const response = await fetch(APIRoot + getProblemsByCollectionAPI + `?collectionID=${collectionID}`, {
                 method: "GET",
                 credentials: "include",
@@ -47,9 +47,9 @@ export default function Collection() {
         const subject = document.getElementById("subject").value;
         const topics = document.getElementById("topics").value;
         const description = document.getElementById("description").value;
-        const renderedDescription = description;
+        const renderedDescription = remarkableKatexRender(description);
         const solution = document.getElementById("solution").value;
-        const renderedSolution = solution;
+        const renderedSolution = remarkableKatexRender(solution);
         setNewProblem({
             subject,
             topics,
@@ -60,7 +60,7 @@ export default function Collection() {
         });
     }
 
-    const addProblem = async() => {
+    const addProblem = async () => {
         const problemID = await addNewProblem(newProblem);
         setNewProblem({
             subject: "",
@@ -75,6 +75,30 @@ export default function Collection() {
         await getProblemsByCollection(collectionID);
         document.getElementById("newProblem").close();
     };
+
+    const deleteProblem = async (problemID) => {
+        try {
+            const APPRoot = process.env.REACT_APP_API_ROOT;
+            const deleteProblemAPI = process.env.REACT_APP_DELETE_PROBLEM_API;
+            const response = await fetch(APPRoot + deleteProblemAPI, {
+                method: "delete",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    problemID: problemID,
+                    collectionID: collectionID
+                })
+            });
+            if (!response.ok) {
+                throw Error("Could not delete problem");
+            }
+            await getProblemsByCollection(collectionID);
+        } catch (err) {
+            console.error("Could not delete problem");
+        }
+    }
 
     useEffect(() => {
         const getCollection = async (collectionID) => {
@@ -120,13 +144,16 @@ export default function Collection() {
                 </button>
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
                 <dialog id="newProblem" className="modal">
-                    <div className="flex flex-col md:flex-row modal-box md:w-11/12 max-w-5xl h-full md:h-2/3 gap-5">
-                        <div className="flex flex-col w-full md:w-1/2 h-full p-4 overflow-y-scroll gap-5">
+                    <div className="flex flex-col md:flex-row modal-box md:w-11/12 max-w-7xl h-screen md:h-2/3 gap-5">
+                        <form method="dialog">
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"> <X className="bg-base-100 rounded-full"/> </button>
+                        </form>
+                        <div className="flex flex-col w-full md:w-1/2 h-1/2 md:h-full p-4 gap-5">
                             <h1 className="text-secondary">Create a New Problem</h1>
                             <div className="flex flex-col w-full h-full overflow-y-scroll bg-neutral rounded-lg p-2 gap-2">
                                 <div className="flex flex-col md:flex-row gap-2 w-full">
-                                    <input type="text" id="subject" placeholder="Subject" value={newProblem.subject} className="input w-full md:w-1/3 rounded-lg text-sm" onChange={problemInput}/>
-                                    <input type="text" id="topics" placeholder="Topics" value={newProblem.topics} className="input w-full md:w-2/3 rounded-lg text-sm" onChange={problemInput}/>
+                                    <input type="text" id="subject" placeholder="Subject" value={newProblem.subject} className="input w-full md:w-1/3 rounded-lg text-sm" onChange={problemInput} />
+                                    <input type="text" id="topics" placeholder="Topics" value={newProblem.topics} className="input w-full md:w-2/3 rounded-lg text-sm" onChange={problemInput} />
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <textarea id="description" value={newProblem.description} placeholder="Problem Description..." cols="30" rows="5" className="textarea" onChange={problemInput}></textarea>
@@ -140,20 +167,20 @@ export default function Collection() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col w-full md:w-1/2 h-full p-4 bg-neutral overflow-y-scroll gap-5">
+                        <div className="flex flex-col w-full md:w-1/2 h-1/2 md:h-full p-4 bg-neutral gap-5">
                             <h1 className="text-accent">Preview</h1>
-                            <div className="flex flex-col w-full h-full rounded-lg p-2 gap-5">
+                            <div className="flex flex-col w-full h-full rounded-lg p-2 overflow-y-scroll gap-5">
                                 <div className="flex flex-col gap-2 w-full">
                                     <h1 className="text-sm">Subject: {newProblem.subject}</h1>
                                     <h2 className="text-sm">Topics: {newProblem.topics}</h2>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="descprev" className="text-sm">Description:</label>
-                                    <textarea id="descprev" value={newProblem.renderedDescription} cols="30" rows="7" className="rounded-lg p-2 text-sm" disabled style={{cursor: "default"}}></textarea>
+                                    <div id="descprev" dangerouslySetInnerHTML={{ __html: newProblem.renderedDescription }} className="bg-base-100 p-2 text-sm w-full min-h-36 resize-y overflow-y-scroll rounded-lg"></div>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="solprev" className="text-sm">Solution:</label>
-                                    <textarea id="solprev" value={newProblem.renderedSolution} cols="30" rows="7" className="rounded-lg p-2 text-sm" disabled style={{cursor: "default"}}></textarea>
+                                    <div id="solprev" dangerouslySetInnerHTML={{ __html: newProblem.renderedSolution }} className="bg-base-100 p-2 text-sm w-full min-h-36 resize-y overflow-y-scroll rounded-lg"></div>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +193,7 @@ export default function Collection() {
                 </label>
             </div>
             <div className="flex w-full h-screen gap-5">
-                <Problems problemss={problemss}/>
+                <Problems problemss={problemss} deleteProblem={deleteProblem} />
                 <ProblemMenu />
             </div>
         </div>

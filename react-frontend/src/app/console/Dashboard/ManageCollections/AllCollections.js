@@ -151,7 +151,7 @@ export default function AllCollections() {
             <div className="flex flex-col items-center h-screen w-full overflow-y-scroll">
                 {collections.map(collection => {
                     return (
-                        <div key={collection.collectionID} className="card card-compact text-md font-normal w-3/4 m-2 bg-neutral shadow-xl" style={{ cursor: "pointer" }}>
+                        <div key={collection.collectionID} className="card card-compact text-md font-normal w-3/4 m-2 bg-neutral shadow-xl">
                             <div className="card-body">
                                 <div className="card-title text-sm justify-between">
                                     <div className="flex ">

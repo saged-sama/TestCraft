@@ -1,14 +1,9 @@
-import katex from 'katex';
+import 'katex/dist/katex.min.css';
+import { Remarkable } from "remarkable";
+import rkatex from "remarkable-katex";
 
-export const renderKaTeX = (inlineMath) => {
-    let htmlString = '';
-    try {
-        htmlString = katex.renderToString(inlineMath, {
-            throwOnError: false,
-        });
-    } catch (error) {
-        console.error("KaTeX rendering error:", error);
-        htmlString = `<span class="text-red-500">Error rendering equation:</span>`;
-    }
-    return htmlString;
-};
+export const remarkableKatexRender = (desc) => {
+    let LatexRenderer = new Remarkable();
+    LatexRenderer.use(rkatex);
+    return LatexRenderer.render(desc);
+}

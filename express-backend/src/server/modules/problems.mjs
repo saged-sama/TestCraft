@@ -27,6 +27,33 @@ export default function problem(app, database){
         }
     });
 
+    app.delete("/delete-problem", async (req, res) => {
+        try{
+            const { userID, authToken } = req.cookies;
+            const isAuthorized = await user(userID, authToken, database).isAuthorized();
+
+            const {problemID, collectionID} = req.body;
+
+            const permission = await collection(collectionID, database).getPermission(userID);
+            
+            if (!isAuthorized || !permission) {
+                return res.status(401).json({
+                    error: "Unauthorized action"
+                });
+            }
+
+            await database.connection.promise().execute("delete from problem where id = ?", [problemID]);
+            return res.status(201).json({
+                message: "Successfully deleted problem to collection"
+            });
+        } catch(err){
+            console.log("Could not delete problem from collection: ", err);
+            return res.status(500).json({
+                error: "Could not delete problem from collection"
+            });
+        }
+    });
+
     app.get("/get-problems-by-collection", async (req, res) => {
         try{
             const { userID, authToken } = req.cookies;
@@ -41,7 +68,6 @@ export default function problem(app, database){
             const q = "select c.problemID as problemID, p.subj as subject, p.creatorID, p.topics, p.probDesc as description, p.solution, p.creationTime as dateCreated from collectionProblems c join problem p on c.problemID = p.id where c.collectionID = ? order by dateCreated desc;";
             const [rows, _] = await database.connection.promise().query(q, [collectionID]);
             const problems = rows;
-            console.log(problems);
             return res.status(200).json({
                 problems
             });
