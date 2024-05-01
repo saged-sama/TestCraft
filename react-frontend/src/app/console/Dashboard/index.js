@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from "react-router-dom";
 import ManageCollections from "./ManageCollections";
 import { ChevronRight } from "lucide-react";
+import ManageChannels from "./ManageChannels";
 
 export default function Dashboard() {
 
@@ -16,6 +17,7 @@ export default function Dashboard() {
                         <div className="flex justify-center rounded w-full h-full">
                             <Routes>
                                 <Route path="/manageCollections/*" element={<ManageCollections />} />
+                                <Route path="/manageChannels/*" element={<ManageChannels />} />
                             </Routes>
                         </div>
                     </div>
@@ -24,7 +26,7 @@ export default function Dashboard() {
                         <ul className="menu p-4 w-3/5 sm:w-1/3 lg:w-80 h-full bg-base-200 text-base-content">
                             {/* Sidebar content here */}
                             <Link to="/app/dashboard/manageCollections" className="btn btn-ghost">Manage Collections</Link>
-                            <Link className="btn btn-ghost">Manage Channels</Link>
+                            <Link to="/app/dashboard/manageChannels" className="btn btn-ghost">Manage Channels</Link>
                             <Link className="btn btn-ghost">Get Analysis</Link>
                         </ul>
                     </div>

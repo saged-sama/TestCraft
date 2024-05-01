@@ -140,7 +140,7 @@ export default function Collection() {
             </div>
             <div className="flex flex-col-reverse md:flex-row justify-between items-center">
                 <button className="btn btn-neutral btn-ghost btn-sm" onClick={() => { document.getElementById('newProblem').showModal(); }}>
-                    <span className="flex items-center gap-1"><CirclePlus className="w-4 h-4" /> Add New Problem</span>
+                    <span className="flex items-center gap-1"><CirclePlus className="w-4 h-4 text-primary" /> Add New Problem</span>
                 </button>
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
                 <dialog id="newProblem" className="modal">

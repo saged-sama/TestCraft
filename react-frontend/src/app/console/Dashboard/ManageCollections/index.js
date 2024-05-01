@@ -9,7 +9,6 @@ export default function ManageCollections() {
             <Routes>
                 <Route exact path="/*" element={<AllCollections />} />
                 <Route path="/:collectionID" element={<Collection />} />
-            {/* <Route path="/:collectionID" element={<ManageCollection />} /> */}
             </Routes>
         </div>
     );
