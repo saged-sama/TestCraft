@@ -1,4 +1,4 @@
-import { Share, Edit, Trash2, Dot, X } from "lucide-react";
+import { Share, Edit, Trash2, Dot, X, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { dateExtractFromMySQLDateTime } from "../../../../lib/useDate";
 import { Search, CirclePlus } from "lucide-react";
@@ -112,6 +112,28 @@ export default function AllCollections() {
         }
     }
 
+    const searchCollections = async () => {
+        const searchText = document.getElementById("searchCollections").value;
+        try {
+            const APIRoot = process.env.REACT_APP_API_ROOT;
+            const searchCollectionsAPI = process.env.REACT_APP_SEARCH_COLLECTIONS;
+            const response = await fetch(APIRoot + searchCollectionsAPI + `?search=${searchText}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            if (!response.ok) {
+                console.error("Could not search collections");
+            }
+            const resp = await response.json();
+            setCollections(resp.collections);
+        } catch (err) {
+            console.error("Couldn't add collection: ", err);
+        }
+    }
+
     return (
         <div className="flex flex-col h-full overscroll-y-contain gap-2">
             {/* Header */}
@@ -124,7 +146,7 @@ export default function AllCollections() {
                 </button>
 
                 <label className="hidden input input-bordered md:w-1/2 md:flex items-center gap-2">
-                    <input type="text" className="grow" placeholder="Search Collections..." />
+                    <input id="searchCollections" type="text" className="grow" placeholder="Search Collections..." onChange={searchCollections} />
                     <Search />
                 </label>
             </div>
@@ -149,6 +171,11 @@ export default function AllCollections() {
             </dialog>
 
             <div className="flex flex-col items-center h-screen w-full overflow-y-scroll">
+                {collections.length === 0 &&
+                    <div className="flex items-center justify-center text-center p-10 gap-2">
+                        <button className="btn btn-disabled text-error"><Trash /> Collections Set Empty</button>
+                    </div>
+                }
                 {collections.map(collection => {
                     return (
                         <div key={collection.collectionID} className="card card-compact text-md font-normal w-3/4 m-2 bg-neutral shadow-xl">
@@ -201,14 +228,14 @@ export default function AllCollections() {
                                 </div>
                                 <div className="card-actions justify-end">
                                     <div className="dropdown dropdown-left">
-                                        <button tabIndex={0} className="btn btn-neutral btn-xs" title="Share"><Share className="w-4 h-4" /></button>
+                                        <button tabIndex={0} className="btn btn-base-100 btn-sm" title="Share"><Share className="w-4 h-4" /></button>
                                         <div tabIndex={0} className="dropdown-content z-[1] menu p-5 gap-2 shadow bg-base-100 rounded-box w-80">
                                             <input type="text" className="input input-md input-bordered" placeholder="Search username..." id="sharedWith" />
                                             <button className="btn btn-accent" onClick={() => { shareWithUser(collection.collectionID) }}>Add</button>
                                         </div>
                                     </div>
-                                    <Link to={`/app/dashboard/manageCollections/${collection.collectionID}`} className="btn btn-neutral btn-xs" title="Edit"><Edit className="w-4 h-4" /> </Link>
-                                    <button className="btn btn-neutral btn-xs" title="Delete" onClick={() => deleteCollection(collection.collectionID)}><Trash2 className="w-4 h-4" /> </button>
+                                    <Link to={`/app/dashboard/manageCollections/${collection.collectionID}`} className="btn btn-base-100 btn-sm" title="Edit"><Edit className="w-4 h-4" /> </Link>
+                                    <button className="btn btn-base-100 btn-sm" title="Delete" onClick={() => deleteCollection(collection.collectionID)}><Trash2 className="w-4 h-4" /> </button>
                                 </div>
                             </div>
                         </div>

@@ -3,6 +3,5 @@ create table if not exists channel(
     channelName varchar(20),
     channelOwner char(36) not null,
     dateCreated datetime,
-    foreign key (channelOwner) references user(id)
+    foreign key (channelOwner) references user(id) on delete cascade
 );
-

@@ -6,13 +6,16 @@ import { addNewProblem, addProblemToCollection } from "../../../../lib/problem";
 import Problems from "./Problems";
 import ProblemMenu from "./ProblemMenu";
 import { remarkableKatexRender } from "../../../../lib/InlineMath";
+import { getOrdinal } from "../../../../lib/utils";
 
 export default function Collection() {
     const { collectionID } = useParams();
     const [collection, setCollection] = useState({});
     const [problemss, setProblems] = useState([]);
+    const [subjects, setSubjects] = useState([]);
     const [newProblem, setNewProblem] = useState({
         subject: "",
+        subjectID: "",
         topics: "",
         description: "",
         renderedDescription: "",
@@ -43,27 +46,48 @@ export default function Collection() {
         }
     };
 
-    const problemInput = () => {
+    const problemInput = async () => {
         const subject = document.getElementById("subject").value;
         const topics = document.getElementById("topics").value;
         const description = document.getElementById("description").value;
         const renderedDescription = remarkableKatexRender(description);
         const solution = document.getElementById("solution").value;
         const renderedSolution = remarkableKatexRender(solution);
+        const subjectID = await getSubjectIDByName(subject);
         setNewProblem({
             subject,
+            subjectID,
             topics,
             description,
             renderedDescription,
             solution,
             renderedSolution
         });
+        
     }
 
     const addProblem = async () => {
+        const subject = document.getElementById("subject").value;
+        const topics = document.getElementById("topics").value;
+        const description = document.getElementById("description").value;
+        const renderedDescription = remarkableKatexRender(description);
+        const solution = document.getElementById("solution").value;
+        const renderedSolution = remarkableKatexRender(solution);
+        const subjectID = await getSubjectIDByName(subject);
+        setNewProblem({
+            subject,
+            subjectID,
+            topics,
+            description,
+            renderedDescription,
+            solution,
+            renderedSolution
+        });
+        console.log()
         const problemID = await addNewProblem(newProblem);
         setNewProblem({
             subject: "",
+            subjectID: "",
             topics: "",
             description: "",
             renderedDescription: "",
@@ -100,32 +124,75 @@ export default function Collection() {
         }
     }
 
-    useEffect(() => {
-        const getCollection = async (collectionID) => {
-            try {
-                const APIRoot = process.env.REACT_APP_API_ROOT;
-                const getCollectionByIDAPI = process.env.REACT_APP_GET_COLLECTION_BY_ID;
-                const response = await fetch(APIRoot + getCollectionByIDAPI + `?collectionID=${collectionID}`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Content-type": "application/json"
-                    }
-                });
-                if (!response.ok) {
-                    throw Error("Could not get collection by id");
+    const getCollection = async (collectionID) => {
+        try {
+            const APIRoot = process.env.REACT_APP_API_ROOT;
+            const getCollectionByIDAPI = process.env.REACT_APP_GET_COLLECTION_BY_ID;
+            const response = await fetch(APIRoot + getCollectionByIDAPI + `?collectionID=${collectionID}`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/json"
                 }
-                const resp = await response.json();
-                let col = resp.collection;
-                col.dateCreated = dateExtractFromMySQLDateTime(col.dateCreated);
-                col.lastUpdate = dateExtractFromMySQLDateTime(col.lastUpdate);
-                setCollection(col);
-            } catch (err) {
-                console.error("Could not get collection by id");
+            });
+            if (!response.ok) {
+                throw Error("Could not get collection by id");
             }
-        };
+            const resp = await response.json();
+            let col = resp.collection;
+            col.dateCreated = dateExtractFromMySQLDateTime(col.dateCreated);
+            col.lastUpdate = dateExtractFromMySQLDateTime(col.lastUpdate);
+            setCollection(col);
+        } catch (err) {
+            console.error("Could not get collection by id");
+        }
+    };
+
+    const getSubjects = async () => {
+        try {
+            const APIroot = process.env.REACT_APP_API_ROOT;
+            const getSubjectsAPI = process.env.REACT_APP_GET_SUBJECTS_API;
+            const response = await fetch(APIroot + getSubjectsAPI, {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            });
+            if (!response.ok) {
+                throw Error("Could not get subjects");
+            }
+            const resp = await response.json();
+            setSubjects(resp.subjects)
+        } catch (err) {
+            console.error("Could not get subjects");
+        }
+    };
+
+    const getSubjectIDByName = async (subjectName) => {
+        try {
+            const APIroot = process.env.REACT_APP_API_ROOT;
+            const getSubjectIDByName = process.env.REACT_APP_GET_SUBJECT_ID_BY_NAME;
+            const response = await fetch(APIroot + getSubjectIDByName + `?title=${subjectName}`, {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            });
+            if (!response.ok) {
+                throw Error("Could not get subjects");
+            }
+            const resp = await response.json();
+            return resp.subjectID;
+        } catch (err) {
+            console.error("Could not get subjects");
+            return "";
+        }
+    }
+
+    useEffect(() => {
         getCollection(collectionID);
         getProblemsByCollection(collectionID);
+        getSubjects();
     }, [collectionID]);
 
     return (
@@ -146,20 +213,32 @@ export default function Collection() {
                 <dialog id="newProblem" className="modal">
                     <div className="flex flex-col md:flex-row modal-box md:w-11/12 max-w-7xl h-screen md:h-2/3 gap-5">
                         <form method="dialog">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"> <X className="bg-base-100 rounded-full"/> </button>
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"> <X className="bg-base-100 rounded-full" /> </button>
                         </form>
                         <div className="flex flex-col w-full md:w-1/2 h-1/2 md:h-full p-4 gap-5">
                             <h1 className="text-secondary">Create a New Problem</h1>
                             <div className="flex flex-col w-full h-full overflow-y-scroll bg-neutral rounded-lg p-2 gap-2">
                                 <div className="flex flex-col md:flex-row gap-2 w-full">
-                                    <input type="text" id="subject" placeholder="Subject" value={newProblem.subject} className="input w-full md:w-1/3 rounded-lg text-sm" onChange={problemInput} />
-                                    <input type="text" id="topics" placeholder="Topics" value={newProblem.topics} className="input w-full md:w-2/3 rounded-lg text-sm" onChange={problemInput} />
+                                    <input
+                                        list="suggestions"
+                                        type="text"
+                                        id="subject"
+                                        placeholder="Subject"
+                                        className="input w-full md:w-1/3 rounded-lg text-sm"
+                                        onChange={problemInput}
+                                    />
+                                    <datalist id="suggestions" className="display max-h-40 overflow-y-auto bg-neutral">
+                                        {subjects.map((subject, key) => (
+                                            <option key={key} value={subject.paper === 0 ? subject.title : `${subject.title}, ${getOrdinal(subject.paper)} paper`} />
+                                        ))}
+                                    </datalist>
+                                    <input type="text" id="topics" placeholder="Topics" className="input w-full md:w-2/3 rounded-lg text-sm" onChange={problemInput}/>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <textarea id="description" value={newProblem.description} placeholder="Problem Description..." cols="30" rows="5" className="textarea" onChange={problemInput}></textarea>
+                                    <textarea id="description" placeholder="Problem Description..." cols="30" rows="5" className="textarea overflow-y-auto" onChange={problemInput}></textarea>
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <textarea id="solution" value={newProblem.solution} placeholder="Solution Description..." cols="30" rows="5" className="textarea" onChange={problemInput}></textarea>
+                                    <textarea id="solution" placeholder="Solution Description..." cols="30" rows="5" className="textarea overflow-y-auto" onChange={problemInput}></textarea>
                                 </div>
                                 <div className="flex w-1/2 gap-2">
                                     <button className="btn btn-secondary" onClick={addProblem}>Add Problem</button>
@@ -176,11 +255,11 @@ export default function Collection() {
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="descprev" className="text-sm">Description:</label>
-                                    <div id="descprev" dangerouslySetInnerHTML={{ __html: newProblem.renderedDescription }} className="bg-base-100 p-2 text-sm w-full min-h-36 resize-y overflow-y-scroll rounded-lg"></div>
+                                    <div id="descprev" dangerouslySetInnerHTML={{ __html: newProblem.renderedDescription }} className="bg-base-100 p-2 text-sm w-full min-h-36 resize-y overflow-y-auto rounded-lg"></div>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label htmlFor="solprev" className="text-sm">Solution:</label>
-                                    <div id="solprev" dangerouslySetInnerHTML={{ __html: newProblem.renderedSolution }} className="bg-base-100 p-2 text-sm w-full min-h-36 resize-y overflow-y-scroll rounded-lg"></div>
+                                    <div id="solprev" dangerouslySetInnerHTML={{ __html: newProblem.renderedSolution }} className="bg-base-100 p-2 text-sm w-full min-h-36 resize-y overflow-y-auto rounded-lg"></div>
                                 </div>
                             </div>
                         </div>

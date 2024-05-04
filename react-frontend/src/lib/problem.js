@@ -1,4 +1,5 @@
 export async function addNewProblem(problem){
+    console.log(problem);
     try{
         const APIRoot = process.env.REACT_APP_API_ROOT;
         const newProblemAPI = process.env.REACT_APP_ADD_NEW_PROBLEM;

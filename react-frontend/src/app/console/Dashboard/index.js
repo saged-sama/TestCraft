@@ -2,6 +2,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import ManageCollections from "./ManageCollections";
 import { ChevronRight } from "lucide-react";
 import ManageChannels from "./ManageChannels";
+import Analysis from "./Analysis";
 
 export default function Dashboard() {
 
@@ -18,6 +19,7 @@ export default function Dashboard() {
                             <Routes>
                                 <Route path="/manageCollections/*" element={<ManageCollections />} />
                                 <Route path="/manageChannels/*" element={<ManageChannels />} />
+                                <Route path="/analysis/*" element={<Analysis />} />
                             </Routes>
                         </div>
                     </div>
@@ -27,7 +29,7 @@ export default function Dashboard() {
                             {/* Sidebar content here */}
                             <Link to="/app/dashboard/manageCollections" className="btn btn-ghost">Manage Collections</Link>
                             <Link to="/app/dashboard/manageChannels" className="btn btn-ghost">Manage Channels</Link>
-                            <Link className="btn btn-ghost">Get Analysis</Link>
+                            <Link to="/app/dashboard/analysis" className="btn btn-ghost">Stats and Analysis</Link>
                         </ul>
                     </div>
                 </div>

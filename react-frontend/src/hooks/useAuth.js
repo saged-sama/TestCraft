@@ -30,8 +30,9 @@ export default function useAuth () {
 
     const signup = async (user) => {
         try{
-            console.log()
-            const response = await fetch(process.env.REACT_APP_SIGNUP_API, {
+            const APIroot = process.env.REACT_APP_API_ROOT;
+            const signupAPI = process.env.REACT_APP_SIGNUP_API;
+            const response = await fetch(APIroot + signupAPI, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -56,7 +57,9 @@ export default function useAuth () {
 
     const logoutOfAllDevices = async () => {
         try{
-            const response = await fetch(process.env.REACT_APP_LOGOUT_OF_ALL_DEVICES, {
+            const APIroot = process.env.REACT_APP_API_ROOT;
+            const logOutOfAllDevicesAPI = process.env.REACT_APP_LOGOUT_OF_ALL_DEVICES
+            const response = await fetch(APIroot + logOutOfAllDevicesAPI, {
                 method: "GET",
                 credentials: "include"
             });

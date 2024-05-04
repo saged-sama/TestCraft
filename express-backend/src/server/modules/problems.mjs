@@ -12,8 +12,10 @@ export default function problem(app, database){
                     error: "Unauthorized action"
                 });
             }
-            const {subject, topics, description, solution} = req.body;
-            const [rows, _] = await database.connection.promise().query("select addproblem(?, ?, ?, ?, ?) as problemID;", [subject, topics, description, solution, userID]);
+            // console.log(req.body);
+            const {subjectID, topics, description, solution} = req.body;
+            console.log({subjectID, topics, description, solution});
+            const [rows, _] = await database.connection.promise().query("select addproblem(?, ?, ?, ?, ?) as problemID;", [subjectID, topics, description, solution, userID]);
             const problemID = rows[0]["problemID"];
             return res.status(200).json({
                 problemID: problemID,
@@ -65,7 +67,7 @@ export default function problem(app, database){
                     error: "Unauthorized action"
                 });
             }
-            const q = "select c.problemID as problemID, p.subj as subject, p.creatorID, p.topics, p.probDesc as description, p.solution, p.creationTime as dateCreated from collectionProblems c join problem p on c.problemID = p.id where c.collectionID = ? order by dateCreated desc;";
+            const q = "select c.problemID as problemID, s.title as subject, p.creatorID, p.topics, p.probDesc as description, p.solution, p.creationTime as dateCreated from collectionProblems c join problem p on c.problemID = p.id join subjects s on p.subj = s.id where c.collectionID = ? order by dateCreated desc;";
             const [rows, _] = await database.connection.promise().query(q, [collectionID]);
             const problems = rows;
             return res.status(200).json({

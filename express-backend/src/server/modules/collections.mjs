@@ -91,10 +91,8 @@ export default function collections(app, database) {
             }
             
             const [rows, _] = await database.connection.promise().query("select * from collections where id = ?", [collectionID]);
-            const coll = rows[0];
-            // console.log(coll);
             return res.status(200).json({
-                collection: coll
+                collection: rows[0]
             });
         } catch(err){
             console.log("Could not get collection by id: ", err);
@@ -159,4 +157,30 @@ export default function collections(app, database) {
             })
         }
     });
+
+    app.get("/search-collections", async(req, res) => {
+        try{
+            const { userID, authToken } = req.cookies;
+            let isAuthorized = await user(userID, authToken, database).isAuthorized();
+            
+            if(!isAuthorized){
+                return res.status(401).json({
+                    error: "Unauthorized action"
+                });
+            }
+            const {search} = req.query;
+
+            const [rows, _] = await database.connection.promise().query("call searchCollections(?, ?)", [userID, search]);
+
+            return res.status(200).json({
+                collections: rows[0]
+            });
+        }
+        catch(err){
+            console.error("Could not share collection with user: ", err);
+            return res.status(400).json({
+                message: "Could not share collection with user"
+            })
+        }
+    })
 }

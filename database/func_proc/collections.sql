@@ -47,7 +47,36 @@ begin
     join userDetails as u
         on ca.userID = u.userid
     where ca.userID = p_userID
-    order by dateCreated desc;
+    order by c.dateCreated desc;
+end //
+
+delimiter ;
+
+
+delimiter //
+
+create procedure if not exists searchCollections(
+    in p_userID char(36),
+    in p_search longtext
+)
+begin
+    select 
+        ca.collectionID,
+        c.collectionName,
+        u.usersName as ownerName,
+        c.dateCreated as createdOn,
+        c.lastUpdate as lastModified 
+    from 
+        CollectionAccess as ca
+    join 
+        collections as c on ca.collectionID = c.id
+    join 
+        userDetails as u on ca.userID = u.userid
+    where 
+        ca.userID = p_userID
+        and (c.collectionName like concat('%', p_search, '%') or u.usersName like concat('%', p_search, '%'))
+    order by c.dateCreated desc;
+
 end //
 
 delimiter ;

@@ -5,19 +5,43 @@ export default function channels(app, database) {
         const removechannel = 'call removechannel(?)';
         const channelowner = 'select channelOwner from channel where id = ?';
 
-        // Add channel
-        app.put("/add-channel", async (req, res) => {
+        app.get("/get-channels", async(req, res) => {
             try{
                 const { userID, authToken } = req.cookies;
                 const isAuthorized = await user(userID, authToken, database).isAuthorized();
-                // console.log(isAuthorized);
+                
                 if(!isAuthorized){
                     return res.status(401).json({
                         error: "Could not add the channel"
                     });
                 }
-                const { channelName, ownerID } = req.body;
-                await database.connection.promise().execute(addchannel, [channelName, ownerID]);
+
+                const [rows, _] = await database.connection.promise().query("call getAllChannelsByUserID(?)", [userID]);
+                // console.log(rows[0]);
+                return res.status(200).json({
+                    channels: rows[0]
+                });
+            } catch(err){
+                console.error("Could not get channels: ", err);
+                return res.status(500).json({
+                    message: "Could not get channels"
+                });
+            }
+        });
+
+        // Add channel
+        app.post("/add-channel", async (req, res) => {
+            try{
+                const { userID, authToken } = req.cookies;
+                const isAuthorized = await user(userID, authToken, database).isAuthorized();
+                
+                if(!isAuthorized){
+                    return res.status(401).json({
+                        error: "Could not add the channel"
+                    });
+                }
+                const { channelName } = req.body;
+                await database.connection.promise().execute(addchannel, [channelName, userID]);
                 return res.status(200).json({
                     message: "Channel added successfully"
                 });

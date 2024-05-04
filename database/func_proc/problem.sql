@@ -1,7 +1,7 @@
 delimiter //
 
 create function if not exists addproblem(
-    p_subj varchar(20),
+    p_subj char(36),
     p_topics varchar(255),
     p_probDesc longtext,
     p_solution longtext,
