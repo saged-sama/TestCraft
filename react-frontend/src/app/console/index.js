@@ -5,7 +5,8 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../lib/AuthProvider";
 import Profile from "./Profile";
-import Exam from './Exam';
+import Channels from './Channels';
+import Channel from "./Channel";
 
 export default function Console(){
     const { loginState } = useContext(AuthContext);
@@ -27,8 +28,8 @@ export default function Console(){
                     <Route path="/dashboard/*" element={<Dashboard />}/>
                     <Route path="/explore/*" element={<Explore />}/>
                     <Route path="/profile" element={<Profile />}/>
-                    <Route exact path="/Exam/*" element={<Exam />}/>
-                    
+                    <Route exact path="/Channels/*" element={<Channels />}/>
+                    <Route path="/Channel/:channelID" element={<Channel/>} />
                 </Routes>
             </div>
         </div>
