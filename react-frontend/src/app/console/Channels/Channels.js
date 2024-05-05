@@ -53,7 +53,7 @@ export default function Explore() {
                                 <h2 className="card-title">{channel.name}</h2>
                                 <p>{channel.description}</p>
                                 <div className="card-actions justify-end">
-                                    <a href={`Channel/hdhhd`} className="btn btn-primary">Open</a>
+                                    <a href={`Channels/namnai`} className="btn btn-primary">Open</a>
                                 </div>
                             </div>
                         </div>
