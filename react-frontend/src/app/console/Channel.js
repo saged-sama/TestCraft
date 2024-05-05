@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronRight } from "lucide-react";
 import Cookies from 'js-cookie';
+import Announcement from './ContentComponents/Announcement';
+import Exam from './ContentComponents/Exam';
+import Classwork from './ContentComponents/Classwork';
+import People from './ContentComponents/People';
 
 export default function Channel() {
     const [selectedGroup, setSelectedGroup] = useState(null);
@@ -55,29 +59,13 @@ export default function Channel() {
     const renderSelectedContent = () => {
         switch (selectedContent) {
             case 'Announcement':
-                return (
-                    <div>
-                        <h2>Announcement</h2>
-                    </div>
-                );
+                return <Announcement />;
             case 'Exam':
-                return (
-                    <div>
-                        <h2>Exam</h2>
-                    </div>
-                );
+                return <Exam />;
             case 'Classwork':
-                return (
-                    <div>
-                        <h2>Classwork</h2>
-                    </div>
-                );
+                return <Classwork />;
             case 'People':
-                return (
-                    <div>
-                        <h2>People</h2>
-                    </div>
-                );
+                return <People/>;
             default:
                 return <p>Please select an option</p>;
         }
