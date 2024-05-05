@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { ChevronRight } from "lucide-react";
+import Cookies from 'js-cookie';
 
 export default function Channel() {
-    const [selectedGroup, setSelectedGroup] = useState(null); // State to track selected group
-
-    // Function to handle group selection
+    const [selectedGroup, setSelectedGroup] = useState(null);
+    const [selectedContent, setSelectedContent] = useState(null);
+    // const userID = Cookies.get('userID');
+    // console.log(userID);
     const handleGroupSelect = (groupName) => {
         setSelectedGroup(groupName);
     };
@@ -25,15 +27,16 @@ export default function Channel() {
             "image": "https://udvash.com/media/Images/UDVASH/program/2024/1/1.png",
             "peopleInvolved": 42
         },
-        // Add more groups as needed
     ]
+    const handleContentSelect = (contentName) => {
+        console.log(selectedContent);
+        setSelectedContent(contentName);
+    };
     const renderGroupContent = () => {
-        // Check if a group is selected
         if (selectedGroup) {
             // Find the selected group from groupData array
             const selectedGroupData = groupData.find(group => group.name === selectedGroup);
 
-            // If the selected group is found, render its content
             if (selectedGroupData) {
                 return (
                     <div>
@@ -43,12 +46,40 @@ export default function Channel() {
                     </div>
                 );
             } else {
-                // If the selected group is not found, render a message indicating no content
                 return <p>No content available for the selected group</p>;
             }
         } else {
-            // If no group is selected, render a default message
             return <p>Please select a group</p>;
+        }
+    };
+    const renderSelectedContent = () => {
+        switch (selectedContent) {
+            case 'Announcement':
+                return (
+                    <div>
+                        <h2>Announcement</h2>
+                    </div>
+                );
+            case 'Exam':
+                return (
+                    <div>
+                        <h2>Exam</h2>
+                    </div>
+                );
+            case 'Classwork':
+                return (
+                    <div>
+                        <h2>Classwork</h2>
+                    </div>
+                );
+            case 'People':
+                return (
+                    <div>
+                        <h2>People</h2>
+                    </div>
+                );
+            default:
+                return <p>Please select an option</p>;
         }
     };
 
@@ -62,44 +93,34 @@ export default function Channel() {
                     <div className="drawer-content flex flex-col items-start">
 
 
-                        <div class="border-b border-gray-200 dark:border-gray-700">
-                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
-                                <li class="me-2">
-                                    <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                                        <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-                                        </svg>Annoucement
+                        <div className="border-b border-gray-200 dark:border-gray-700">
+                            <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+                                <li className="me-2">
+                                    <a href="#" className={`inline-flex items-center justify-center p-4 border-b-2 ${selectedContent === 'Announcement' ? 'border-blue-600 text-blue-600' : 'border-transparent text-black-600'} rounded-t-lg group`} onClick={() => handleContentSelect('Announcement')}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-newspaper"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" /><path d="M18 14h-8" /><path d="M15 18h-5" /><path d="M10 6h8v4h-8V6Z" /></svg>Announcement
                                     </a>
                                 </li>
-                                <li class="me-2">
-                                    <a href="#" class="inline-flex items-center justify-center p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 group" aria-current="page">
-                                        <svg class="w-4 h-4 me-2 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                                            <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-                                        </svg> Classword
+                                <li className="me-2">
+                                    <a href="#" className={`inline-flex items-center justify-center p-4 border-b-2 ${selectedContent === 'Classwork' ? 'border-blue-600 text-blue-600' : 'border-transparent text-black-600'} rounded-t-lg group`} onClick={() => handleContentSelect('Classwork')}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="M12 11h4" /><path d="M12 16h4" /><path d="M8 11h.01" /><path d="M8 16h.01" /></svg> Classwork
                                     </a>
                                 </li>
-                                <li class="me-2">
-                                    <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                                        <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M5 11.424V1a1 1 0 1 0-2 0v10.424a3.228 3.228 0 0 0 0 6.152V19a1 1 0 1 0 2 0v-1.424a3.228 3.228 0 0 0 0-6.152ZM19.25 14.5A3.243 3.243 0 0 0 17 11.424V1a1 1 0 0 0-2 0v10.424a3.227 3.227 0 0 0 0 6.152V19a1 1 0 1 0 2 0v-1.424a3.243 3.243 0 0 0 2.25-3.076Zm-6-9A3.243 3.243 0 0 0 11 2.424V1a1 1 0 0 0-2 0v1.424a3.228 3.228 0 0 0 0 6.152V19a1 1 0 1 0 2 0V8.576A3.243 3.243 0 0 0 13.25 5.5Z" />
-                                        </svg>People
+                                <li className="me-2">
+                                    <a href="#" className={`inline-flex items-center justify-center p-4 border-b-2 ${selectedContent === 'Exam' ? 'border-blue-600 text-blue-600' : 'border-transparent text-black-600'} rounded-t-lg group`} onClick={() => handleContentSelect('Exam')}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-check"><path d="M8 3H2v15h7c1.7 0 3 1.3 3 3V7c0-2.2-1.8-4-4-4Z" /><path d="m16 12 2 2 4-4" /><path d="M22 6V3h-6c-2.2 0-4 1.8-4 4v14c0-1.7 1.3-3 3-3h7v-2.3" /></svg>
+                                        Exam
                                     </a>
                                 </li>
-                                <li class="me-2">
-                                    <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                                        <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                            <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
-                                        </svg>Exam
+                                <li className="me-2">
+                                    <a href="#" className={`inline-flex items-center justify-center p-4 border-b-2 ${selectedContent === 'People' ? 'border-blue-600 text-blue-600' : 'border-transparent text-black-600'} rounded-t-lg group`} onClick={() => handleContentSelect('People')}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>People
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">Disabled</a>
-                                </li>
+
                             </ul>
                         </div>
-
-
                         {/* Rendering content based on the selected group */}
+                        {renderSelectedContent()}
                         {renderGroupContent()}
                     </div>
                     <div className="drawer-side">
@@ -108,8 +129,8 @@ export default function Channel() {
                             {groupData.map((group, index) => (
                                 <li key={index} onClick={() => handleGroupSelect(group.name)} className="cursor-pointer mb-4">
                                     <div className="flex  text-md font-normal bg-neutral shadow-xl rounded-xl">
-                                        <div class="avatar">
-                                            <div class="rounded-xl">
+                                        <div className="avatar">
+                                            <div className="rounded-xl">
                                                 <img src={group.image} />
                                             </div>
                                         </div>
@@ -119,7 +140,6 @@ export default function Channel() {
                                             <div className="stat-title">People involved</div></div>
                                     </div>
                                 </li>
-
                             ))}
                         </div>
                     </div>

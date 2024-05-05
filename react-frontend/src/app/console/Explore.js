@@ -42,6 +42,7 @@ export default function Explore() {
     ]
 
     return (
+        
         <div className="flex flex-col items-center">
             <h1 className="mt-8 mb-4 text-3xl font-bold">All of My Channel</h1>
             <div className="container">
@@ -53,7 +54,7 @@ export default function Explore() {
                                 <h2 className="card-title">{channel.name}</h2>
                                 <p>{channel.description}</p>
                                 <div className="card-actions justify-end">
-                                    <a href={`Channel/hdhhd`} className="btn btn-primary">Open</a>
+                                    <a href={`Channel/hdhhd`} className="btn btn-primary">Join Channel</a>
                                 </div>
                             </div>
                         </div>

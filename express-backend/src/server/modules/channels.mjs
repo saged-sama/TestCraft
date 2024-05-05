@@ -8,6 +8,7 @@ export default function channels(app, database) {
         app.get("/get-channels", async(req, res) => {
             try{
                 const { userID, authToken } = req.cookies;
+                console.log(userID);
                 const isAuthorized = await user(userID, authToken, database).isAuthorized();
                 
                 if(!isAuthorized){
