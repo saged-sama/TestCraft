@@ -5,7 +5,7 @@ import Channel from "./Channel";
 export default function main(){
     return (
         <div>
-            <div className="h-full">
+            <div className="h-full p-2">
                 <Routes>
                     <Route exact path="/" element={<Channels />}/>
                     <Route path="/:channelID" element={<Channel />}/>
