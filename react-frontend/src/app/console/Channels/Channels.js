@@ -42,7 +42,7 @@ export default function Explore() {
     ]
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center h-full">
             <h1 className="mt-8 mb-4 text-3xl font-bold">All of My Channel</h1>
             <div className="container">
                 <div className="grid grid-cols-3 gap-4">

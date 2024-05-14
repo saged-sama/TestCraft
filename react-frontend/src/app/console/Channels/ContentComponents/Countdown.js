@@ -28,7 +28,7 @@ const Countdown = ({ endTime }) => {
     });
 
     return (
-        <div>
+        <div className='text-white'>
             {timeLeft.days > 0 && <span>{timeLeft.days} days </span>}
             {timeLeft.hours > 0 && <span>{timeLeft.hours} hours </span>}
             {timeLeft.minutes > 0 && <span>{timeLeft.minutes} minutes </span>}

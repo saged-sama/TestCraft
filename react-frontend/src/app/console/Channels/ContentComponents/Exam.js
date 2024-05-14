@@ -30,28 +30,10 @@ const Exam = () => {
             "startTime": "2024-05-14T13:00:00",
             "endTime": "2024-05-14T15:00:00",
             "totalMarks": 100
-        },
-        {
-            "id": "7f9715a5-3ff5-4a5e-a675-77fc5e2bfc4e",
-            "title": "English Quiz",
-            "subj": "English",
-            "topics": "Literature",
-            "startTime": "2024-05-15T11:00:00",
-            "endTime": "2024-05-15T12:00:00",
-            "totalMarks": 30
-        },
-        {
-            "id": "ccf4e92f-3a52-4d81-b3f4-9d061dc1e6fc",
-            "title": "Physics Test",
-            "subj": "Physics",
-            "topics": "Mechanics",
-            "startTime": "2024-05-16T14:30:00",
-            "endTime": "2024-05-16T16:00:00",
-            "totalMarks": 60
         }
     ]
     return (
-        <div className='m-2 p-2 w-full'>
+        <div className='m-2 p-2 w-full h-full'>
             {tests.map((test) => (
                 <div key={test.id} className="m-2 w-1/2">
                     <div className="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

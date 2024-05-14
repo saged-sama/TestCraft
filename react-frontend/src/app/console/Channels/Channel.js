@@ -72,28 +72,25 @@ export default function Channel() {
         }
     };
 
-
     return (
         <div className="flex h-full w-full">
             <div className='flex flex-col items-center'>
                 <h1 className="text-2xl">Enrolled Program</h1>
-                <div>
-                    <div className="menu p-5 w-80 h-full">
-                        {groupData.map((group, index) => (
-                            <li key={index} onClick={() => handleGroupSelect(group.name)} className="cursor-pointer mb-4">
-                                <div className="flex text-md font-normal bg-neutral">
-                                    <div className="avatar">
-                                        <img src={group.image} />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <div>{group.name}</div>
-                                        <div className="stat-value">{group.peopleInvolved}</div>
-                                        <div className="stat-title">People involved</div>
-                                    </div>
+                <div className="menu p-5 w-80">
+                    {groupData.map((group, index) => (
+                        <li key={index} onClick={() => handleGroupSelect(group.name)} className="cursor-pointer mb-4">
+                            <div className="flex text-md font-normal bg-neutral">
+                                <div className="avatar">
+                                    <img src={group.image} />
                                 </div>
-                            </li>
-                        ))}
-                    </div>
+                                <div className="flex flex-col">
+                                    <div>{group.name}</div>
+                                    <div className="stat-value">{group.peopleInvolved}</div>
+                                    <div className="stat-title">People involved</div>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
                 </div>
             </div>
             <div className='flex flex-col w-full'>
@@ -122,7 +119,7 @@ export default function Channel() {
                     </ul>
                     <hr />
                 </div>
-                <div className="flex">
+                <div className="flex h-full">
                     {renderSelectedContent()}
                 </div>
             </div>

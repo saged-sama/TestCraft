@@ -19,7 +19,7 @@ export default function Console(){
     }, [loginState, navigate]);
 
     return (
-        <div>
+        <div className="h-full">
             <Navbar />
             <div className="h-full">
                 <Routes>
