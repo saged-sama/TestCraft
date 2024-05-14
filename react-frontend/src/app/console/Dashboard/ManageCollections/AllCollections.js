@@ -18,7 +18,7 @@ export default function AllCollections() {
                     credentials: "include"
                 });
                 if (!response.ok) {
-                    console.error("Coud not collect collections");
+                    console.error("Could not collect collections");
                 }
                 const coll = await response.json();
                 coll.forEach(c => {

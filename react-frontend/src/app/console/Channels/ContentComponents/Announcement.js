@@ -1,9 +1,9 @@
-import React from 'react';
-import { ArrowRight , X} from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, X } from 'lucide-react';
 import { Search, CirclePlus } from "lucide-react";
 
-const Announcement = () => {
-    const announcements = [
+const Announcement = ({ channelID, groupID }) => {
+    const [announcements, setAnnouncements] = useState([
         {
             announcementID: 1,
             title: "Important Update",
@@ -19,22 +19,30 @@ const Announcement = () => {
             title: "Event Announcement",
             description: "Integer ac tristique justo. Nulla facilisi. Morbi vehicula nisi vitae felis mattis, vel rhoncus turpis lacinia."
         }
-    ];
-    async function addAnnouncement() {
-        try {
+    ]);
 
-        } catch (err) {
-            console.error("Couldn't add collection: ", err);
-        }
-    }
+    const [searchQuery, setSearchQuery] = useState('');
+    const [newAnnouncement, setNewAnnouncement] = useState({ title: '', description: '' });
 
-    const searchAnnouncement = async () => {
-        try {
+    const addAnnouncement = () => {
+        const newID = announcements.length > 0 ? announcements[announcements.length - 1].announcementID + 1 : 1;
+        const newAnn = {
+            announcementID: newID,
+            title: newAnnouncement.title,
+            description: newAnnouncement.description
+        };
+        setAnnouncements([newAnn, ...announcements]);
+        setNewAnnouncement({ title: '', description: '' });
+        document.getElementById("newAnnouncement").close();
+    };
 
-        } catch (err) {
-            console.error("Couldn't add collection: ", err);
-        }
-    }
+    const searchAnnouncement = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredAnnouncements = announcements.filter(announcement =>
+        announcement.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className='m-2 p-2 h-full'>
@@ -59,17 +67,17 @@ const Announcement = () => {
                             <h1>Announcement</h1>
                             <div className="card-title text-sm">
                                 <label className="input w-full input-bordered flex items-center">
-                                    <input type="text" className="grow md:input-md input-sm" placeholder="Announement Name" id="announcementName" />
+                                    <input type="text" className="grow md:input-md input-sm" placeholder="Announcement Title" value={newAnnouncement.title} onChange={(e) => setNewAnnouncement({ ...newAnnouncement, title: e.target.value })} />
                                 </label>
                             </div>
-                            <textarea placeholder="Add Details" class="textarea textarea-bordered textarea-lg w-full" ></textarea>
+                            <textarea placeholder="Add Details" className="textarea textarea-bordered textarea-lg w-full" value={newAnnouncement.description} onChange={(e) => setNewAnnouncement({ ...newAnnouncement, description: e.target.value })}></textarea>
                             <button onClick={addAnnouncement} className="btn btn-success btn-md w-20">Add</button>
                         </div>
                     </div>
                 </div>
             </dialog>
 
-            {announcements.map((announcement) => (
+            {filteredAnnouncements.map((announcement) => (
                 <div key={announcement.announcementID} className="m-2 w-1/2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{announcement.title}</h5>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{announcement.description}</p>

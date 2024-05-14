@@ -6,12 +6,17 @@ import Exam from './ContentComponents/Exam';
 import Classwork from './ContentComponents/Classwork';
 import People from './ContentComponents/People';
 import { Bell, Layers3Icon, BookOpenCheck, Users } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 export default function Channel() {
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedContent, setSelectedContent] = useState(null);
+    const [setChannaelID] = useState(null);
+    const [groupID, setGroupID] = useState(null);
     // const userID = Cookies.get('userID');
     // console.log(userID);
+    const { channelID } = useParams();
+    console.log(channelID);
     const handleGroupSelect = (groupName) => {
         setSelectedGroup(groupName);
     };
@@ -60,11 +65,11 @@ export default function Channel() {
     const renderSelectedContent = () => {
         switch (selectedContent) {
             case 'Announcement':
-                return <Announcement />;
+                return <Announcement channelID = {channelID} groupID={groupID} />;
             case 'Exam':
                 return <Exam />;
             case 'Classwork':
-                return <Classwork />;
+                return <Classwork  />;
             case 'People':
                 return <People />;
             default:

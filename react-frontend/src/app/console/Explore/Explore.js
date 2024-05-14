@@ -1,45 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Explore() {
-
-    const channelData = [
-        {
-            "id": 1,
-            "name": "Udvash",
-            "description": "Lege takho soth vabe, Sophno joy tumar ei hobe",
-            "image": "https://futurestartup.b-cdn.net/wp-content/uploads/2019/08/udvash.jpg"
-        },
-        {
-            "id": 2,
-            "name": "Channel Name 2",
-            "description": "Description of channel 2",
-            "image": "https://futurestartup.b-cdn.net/wp-content/uploads/2019/08/udvash.jpg"
-        },
-        {
-            "id": 3,
-            "name": "Channel Name 3",
-            "description": "Description of channel 3",
-            "image": "https://futurestartup.b-cdn.net/wp-content/uploads/2019/08/udvash.jpg"
-        }, {
-            "id": 1,
-            "name": "Udvash",
-            "description": "Lege takho soth vabe, Sophno joy tumar ei hobe",
-            "image": "https://futurestartup.b-cdn.net/wp-content/uploads/2019/08/udvash.jpg"
-        },
-        {
-            "id": 2,
-            "name": "Channel Name 2",
-            "description": "Description of channel 2",
-            "image": "https://futurestartup.b-cdn.net/wp-content/uploads/2019/08/udvash.jpg"
-        },
-        {
-            "id": 3,
-            "name": "Channel Name 3",
-            "description": "Description of channel 3",
-            "image": "https://futurestartup.b-cdn.net/wp-content/uploads/2019/08/udvash.jpg"
-        }
-
-    ]
+    const [collections, setCollections] = useState([])
+    useEffect(() => {
+        async function fetchChannels() {
+            try {
+                const response = await fetch('http://localhost:8000/get-all-channels', {
+                    method: "GET",
+                    credentials: "include"
+                });
+                if (!response.ok) {
+                    console.error("Chould not collect collections");
+                }
+                const coll = await response.json();
+                setCollections(coll.channels || []);
+                console.log(coll.channels);
+            } catch (err) {
+                console.error("Could not collect collections");
+            }
+        };
+        fetchChannels();
+    }, []);
 
     return (
         
@@ -47,14 +28,14 @@ export default function Explore() {
             <h1 className="mt-8 mb-4 text-3xl font-bold">All of My Channel</h1>
             <div className="container">
                 <div className="grid grid-cols-3 gap-4">
-                    {channelData.map(channel => (
+                    {collections.length > 0 && collections.map(channel => (
                         <div key={channel.id} className="card card-compact w-96 bg-base-100 shadow-xl">
-                            <figure><img src={channel.image} alt={channel.name} /></figure>
+                            <figure><img src='https://futurestartup.b-cdn.net/wp-content/uploads/2019/08/udvash.jpg' alt={channel.name} /></figure>
                             <div className="card-body">
-                                <h2 className="card-title">{channel.name}</h2>
-                                <p>{channel.description}</p>
+                                <h2 className="card-title">{channel.channelName}</h2>
+                                <p>Lege takho Soth vabe</p>
                                 <div className="card-actions justify-end">
-                                    <a href={`Channel/hdhhd`} className="btn btn-primary">Join Channel</a>
+                                    <a href={`Channel/` + channel.id} className="btn btn-primary">Join Channel</a>
                                 </div>
                             </div>
                         </div>

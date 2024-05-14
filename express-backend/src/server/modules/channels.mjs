@@ -80,4 +80,28 @@ export default function channels(app, database) {
                 });
             }
         });
+        app.get("/get-all-channels", async(req, res) => {
+            try{
+                const { userID, authToken } = req.cookies;
+                console.log(userID);
+                const isAuthorized = await user(userID, authToken, database).isAuthorized();
+                
+                if(!isAuthorized){
+                    return res.status(401).json({
+                        error: "Could not get all the channel"
+                    });
+                }
+
+                const [rows, _] = await database.connection.promise().query("select * from channel");
+                // console.log(rows[0]);
+                return res.status(200).json({
+                    channels: rows
+                });
+            } catch(err){
+                console.error("Could not get channels: ", err);
+                return res.status(500).json({
+                    message: "Could not get channels"
+                });
+            }
+        });
 }

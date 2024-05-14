@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Channels from "./Channels";
 import Channel from "./Channel";
+import Exam from "./Exam"
 
 export default function main() {
     return (
@@ -8,6 +9,7 @@ export default function main() {
             <Routes>
                 <Route exact path="/" element={<Channels />} />
                 <Route path="/:channelID" element={<Channel />} />
+                <Route path="/:channelID/:examID" element={<Exam />} />
             </Routes>
         </div>
     );
