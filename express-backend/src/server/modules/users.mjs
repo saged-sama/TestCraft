@@ -1,3 +1,5 @@
+import PDFDocument from 'pdfkit';
+
 export default function users(app, database){
     const addUser = 'call adduser(?, ?, ?, ?)';
     const authenticate = 'select authenticate(?, ?) as auth';
@@ -66,4 +68,30 @@ export default function users(app, database){
     //         });
     //     }
     // });
+    app.post('/generate-pdf', (req, res) => {
+        const { userAnswers, testData } = req.body;
+      
+        const doc = new PDFDocument();
+      
+        // Set up the PDF document with test data and user answers
+        doc.text(`Test: ${testData.title}`);
+        doc.text(`Subject: ${testData.subj}`);
+        doc.text(`Topics: ${testData.topics}`);
+        doc.text(`Total Marks: ${testData.totalMarks}`);
+        doc.text(`Instructions: ${testData.instructions}`);
+      
+        testData.questions.forEach((question, index) => {
+          doc.text(`Question ${index + 1}: ${question.question}`);
+          doc.text(`Answer: ${userAnswers[index]}`);
+          doc.moveDown();
+        });
+      
+        // Set the response headers for PDF download
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=exam.pdf');
+      
+        // Pipe the PDF document to the response
+        doc.pipe(res);
+        doc.end();
+      });
 }
