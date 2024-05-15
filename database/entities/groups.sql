@@ -5,7 +5,6 @@ create table if not exists grp(
     channelID char(36) not null,
     creatorID char(36) not null,
     dateCreated datetime,
-    foreign key (channelID) references channel(id),
-    foreign key (creatorID) references user(id)
+    foreign key (channelID) references channel(id) on delete cascade,
+    foreign key (creatorID) references user(id) on delete cascade
 );
-

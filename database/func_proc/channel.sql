@@ -11,7 +11,7 @@ begin
     insert into channel(id, channelName, channelOwner, dateCreated)
     values(newChannelID, p_name, p_channelOwner, now());
 
-    insert into channelAccess values(p_channelOwner, newChannelID);
+    insert into channelAccess values(p_channelOwner, newChannelID, "teacher");
 end//
 
 delimiter ;

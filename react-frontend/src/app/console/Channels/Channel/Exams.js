@@ -1,9 +1,9 @@
-import Countdown from './Countdown';
+import Countdown from "./Countdown"
 import React, { useState } from 'react';
 import { ArrowRight, X } from 'lucide-react';
 import { Search, CirclePlus } from "lucide-react";
 
-const Exam = () => {
+export default function Exams() {
     const [tests, settests] = useState([
         {
             "id": "8d5df87a-48f5-4b64-a2b7-918059c6c774",
@@ -112,11 +112,11 @@ const Exam = () => {
     };
 
     return (
-        <div className='m-2 p-2 w-full h-full'>
+        <div className='m-2 p-2 w-full h-screen'>
 
             <div className="flex flex-col-reverse md:flex-row justify-between items-center">
                 <button className="btn btn-neutral btn-ghost btn-sm" onClick={() => document.getElementById("newExam").showModal()}>
-                    <span className="flex items-center gap-1"><CirclePlus className="w-4 h-4 text-primary" /> Create New Announcement</span>
+                    <span className="flex items-center gap-1"><CirclePlus className="w-4 h-4 text-primary" /> Give a New Exam </span>
                 </button>
 
                 <label className="hidden input input-bordered md:w-1/3 md:flex items-center gap-2">
@@ -155,23 +155,23 @@ const Exam = () => {
                             <h2>Add Questions</h2>
                             <textarea className="grow md:input-md input-sm" placeholder="Question" value={newQuestion.question} onChange={(e) => setNewQuestion({ ...newQuestion, question: e.target.value })} />
 
-                            <button onClick={addQuestion} className="btn btn-success btn-md w-20">Add Question</button>
-                            <button onClick={addExam} className="btn btn-success btn-md w-20">Create Exam</button>
+                            <div className="flex gap-2"><button onClick={addQuestion} className="btn btn-success btn-md w-20">Add Question</button>
+                            <button onClick={addExam} className="btn btn-success btn-md w-20">Create Exam</button></div>
                         </div>
                     </div>
 
                     <div className="w-2/3">
                         <div className="card bg-base-200 p-4 rounded-lg h-full overflow-y-auto">
-                            <h2 className="text-lg font-bold mb-2">Preview</h2>
-                            <div className="mb-4">
-                                <p className="mb-1"><strong>Exam Title:</strong> {newExam.title}</p>
-                                <p className="mb-1"><strong>Subject:</strong> {newExam.subj}</p>
-                                <p className="mb-1"><strong>Topics:</strong> {newExam.topics}</p>
-                                <p className="mb-1"><strong>Start Time:</strong> {newExam.startTime}</p>
-                                <p className="mb-1"><strong>End Time:</strong> {newExam.endTime}</p>
-                                <p className="mb-1"><strong>Total Marks:</strong> {newExam.totalMarks}</p>
+                            <h2 className="text-lg font-bold mb-2 text-accent">Preview</h2>
+                            <div className="flex flex-col gap-1">
+                                <p className="mb-1">Exam Title: {newExam.title}</p>
+                                <p className="mb-1">Subject: {newExam.subj}</p>
+                                <p className="mb-1">Topics: {newExam.topics}</p>
+                                <p className="mb-1">Start Time: {newExam.startTime}</p>
+                                <p className="mb-1">End Time: {newExam.endTime}</p>
+                                <p className="mb-1">Total Marks: {newExam.totalMarks}</p>
                             </div>
-                            <h3 className="text-lg font-bold mb-2">Questions</h3>
+                            <h3 className="text-lg font-bold mt-5">Questions</h3>
                             <div className="max-h-64 overflow-y-auto"> {/* Add this container */}
                                 {newExam.questions.map((question, index) => (
                                     <div key={index} className="bg-base-300 p-4 rounded-lg mb-4">
@@ -216,4 +216,3 @@ const Exam = () => {
         </div>
     );
 }
-export default Exam;

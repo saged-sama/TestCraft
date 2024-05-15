@@ -7,8 +7,13 @@ create procedure if not exists addgroup(
     in p_creatorID char(36)
 )
 begin
+    declare newid char(36);
+    set newid = uuid();
+    
     insert into grp(id, groupName, groupPhoto, channelID, creatorID, dateCreated)
-    values (uuid(), p_groupName, p_groupPhoto, p_channelID, p_creatorID, now());
+    values (newid, p_groupName, p_groupPhoto, p_channelID, p_creatorID, now());
+
+    insert into groupAccess values(p_creatorID, newid);
 end//
 
 delimiter ;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Countdown from '/Users/emon/Desktop/Projects/TestCraft/React-frontend/src/app/console/Channels/ContentComponents/Countdown.js';
+import Countdown from '..';
 
-const ExamInterface = () => {
+export default function TakeExam(){
   const [tests, setTests] = useState([
     {
       id: '8d5df87a-48f5-4b64-a2b7-918059c6c774',
@@ -82,6 +82,7 @@ const ExamInterface = () => {
     console.log('Submitting exam:', userAnswers, testData);
     alert('Exam submitted successfully!'); // Placeholder for now
   };
+  
   return (
     <div className="flex flex-col min-h-screen items-center bg-gray-900 py-8">
       <div className="bg-gray-800 shadow-md rounded-lg overflow-hidden w-full max-w-4xl">
@@ -125,5 +126,3 @@ const ExamInterface = () => {
     </div>
   );
 };
-
-export default ExamInterface;

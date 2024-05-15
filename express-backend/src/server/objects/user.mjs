@@ -15,7 +15,7 @@ export default function user(userID, authToken, database){
         try{
             const getUser = "select u.username, u.email, u.phone, ud.* from user u join userDetails ud on u.id = ud.userid where u.id = ?";
             const [rows, _] = await database.connection.promise().query(getUser, [userID]);
-            console.log(rows[0]);
+            // console.log(rows[0]);
             return rows[0];
         } catch(err){
             console.error("Could not check userDetails: ", err);
