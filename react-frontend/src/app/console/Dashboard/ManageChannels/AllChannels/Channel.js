@@ -86,7 +86,7 @@ export default function Channel() {
             <div className="flex flex-col h-3/5 w-full overflow-hidden">
                 <div className="flex flex-col p-2 mx-10 border-b-2 border-t-2">
                     <h1 className="text-primary font-bold">About:</h1>
-                    <p>{channelDetails.about}</p>
+                    <p>Hello!!! This is an awesome channel</p>
                 </div>
                 <div className="flex h-3/4 p-3">
                     <div className="flex flex-col w-1/3 p-3 overflow-auto">

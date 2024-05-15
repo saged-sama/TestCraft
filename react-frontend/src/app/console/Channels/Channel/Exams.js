@@ -1,4 +1,4 @@
-import Countdown from "./Countdown"
+import Countdown from "../../TakeExam/Countdown"
 import React, { useState } from 'react';
 import { ArrowRight, X } from 'lucide-react';
 import { Search, CirclePlus } from "lucide-react";
@@ -116,11 +116,11 @@ export default function Exams() {
 
             <div className="flex flex-col-reverse md:flex-row justify-between items-center">
                 <button className="btn btn-neutral btn-ghost btn-sm" onClick={() => document.getElementById("newExam").showModal()}>
-                    <span className="flex items-center gap-1"><CirclePlus className="w-4 h-4 text-primary" /> Give a New Exam </span>
+                    <span className="flex items-center gap-1"><CirclePlus className="w-4 h-4 text-primary" /> Give a New Test </span>
                 </button>
 
-                <label className="hidden input input-bordered md:w-1/3 md:flex items-center gap-2">
-                    <input id="searchAnnouncement" type="text" className="grow" placeholder="Search Announcement..." onChange={searchAnnouncement} />
+                <label className="hidden input input-bordered  md:flex items-center gap-2">
+                    <input id="searchAnnouncement" type="text" className="grow" placeholder="Search Tests..." onChange={searchAnnouncement} />
                     <Search />
                 </label>
             </div>
@@ -130,7 +130,7 @@ export default function Exams() {
                     <div className="card card-compact text-md font-normal w-1/3 pr-4">
                         <div className="card-body flex flex-col">
                             <div className="flex justify-between">
-                                <h1>Create New Exam</h1>
+                                <h1>Create New Test</h1>
                             </div>
                             <div className="card-title text-sm">
                                 <label className="input w-full input-bordered flex items-center">
@@ -154,9 +154,11 @@ export default function Exams() {
                             </label>
                             <h2>Add Questions</h2>
                             <textarea className="grow md:input-md input-sm" placeholder="Question" value={newQuestion.question} onChange={(e) => setNewQuestion({ ...newQuestion, question: e.target.value })} />
-
-                            <div className="flex gap-2"><button onClick={addQuestion} className="btn btn-success btn-md w-20">Add Question</button>
-                            <button onClick={addExam} className="btn btn-success btn-md w-20">Create Exam</button></div>
+                            
+                            <div className="flex gap-2">
+                                <button onClick={addQuestion} className="btn btn-success btn-md">Add Question</button>
+                                <button onClick={addExam} className="btn btn-success btn-md">Create Exam</button>
+                            </div>
                         </div>
                     </div>
 
@@ -190,21 +192,21 @@ export default function Exams() {
             </dialog>
 
             {tests.map((test) => (
-                <div key={test.id} className="m-2 w-1/2">
-                    <div className="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div key={test.id} className="bg-base-100 rounded-lg m-2 w-1/2">
+                    <div className="p-6 rounded-lg shadow">
                         <div className='flex p-2'>
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{test.title}</h5>
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight">{test.title}</h5>
                             <div className='flex-grow' />
                             <Countdown endTime={test.endTime} />
                         </div>
                         <hr />
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Subject: {test.subj}</p>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Topics: {test.topics}</p>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Start Time: {new Date(test.startTime).toLocaleString()}</p>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Total Marks: {test.totalMarks}</p>
+                        <p className="mb-3 font-normal">Subject: {test.subj}</p>
+                        <p className="mb-3 font-normal">Topics: {test.topics}</p>
+                        <p className="mb-3 font-normal">Start Time: {new Date(test.startTime).toLocaleString()}</p>
+                        <p className="mb-3 font-normal">Total Marks: {test.totalMarks}</p>
                         <a
                             href={`http://localhost:3000/app/Exam/${test.id}`}
-                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center btn btn-info"
                         >
                             Start Exam
                             <ArrowRight />

@@ -3,6 +3,7 @@ import { ArrowRight, X } from 'lucide-react';
 import { Search, CirclePlus } from "lucide-react";
 import { useParams } from 'react-router-dom';
 import {useCookies} from "react-cookie";
+import { dateExtractFromMySQLDateTime } from '../../../../lib/useDate';
 
 export default function Announcements() {
     const [cookies] = useCookies(["userID", "authToken"]);
@@ -75,8 +76,8 @@ export default function Announcements() {
                 console.error("Could not add collection");
             }
             const resp = await response.json();
-            // setAnnouncements(resp.announcements);
-            console.log(resp.announcements);
+            setAnnouncements(resp.announcements);
+            // console.log(resp.announcements);
             // setGroups(resp.groups);
         } catch (err) {
             console.error("Couldn't add collection: ", err);
@@ -102,7 +103,7 @@ export default function Announcements() {
                     <span className="flex items-center gap-1"><CirclePlus className="w-4 h-4 text-primary" /> Add an Announcement</span>
                 </button>
 
-                <label className="hidden input input-bordered md:w-1/2 md:flex items-center gap-2">
+                <label className="hidden input input-bordered  md:flex items-center gap-2">
                     <input id="searchAnnouncement" type="text" className="grow" placeholder="Search Announcement..." onChange={searchAnnouncement} />
                     <Search />
                 </label>
@@ -129,13 +130,12 @@ export default function Announcements() {
             </dialog>
 
             {filteredAnnouncements.map((announcement) => (
-                <div key={announcement.announcementID} className="m-2 w-1/2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{announcement.title}</h5>
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{announcement.description}</p>
-                    <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Read more
-                        <ArrowRight />
-                    </a>
+                <div key={announcement.announcementID} className="flex flex-col gap-5 m-2 w-1/2 p-6 bg-base-100 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <div className='flex flex-col gap-1'>
+                        <h5 className="mb-2 text-xl text-accent font-bold tracking-tight">{announcement.title}</h5>
+                        <h1 className='flex gap-1 text-sm'><p className='text-info'>{announcement.poster}</p> | {dateExtractFromMySQLDateTime(announcement.createdOn)}</h1>
+                    </div>
+                    <div className="bg-neutral p-4 rounded-lg font-normal">{announcement.description}</div>
                 </div>
             ))}
         </div>

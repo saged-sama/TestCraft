@@ -15,27 +15,27 @@ export default function Analysis() {
     };
 
     const ScatterPlot = () => {
-        const xArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-        const yArray = [10, 20, 30, 60, 50, 60, 70, 80, 90, 100];
+        // const xArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+        // const yArray = [10, 20, 30, 60, 50, 60, 70, 80, 90, 100];
 
         // Define Data
         const data = [{
-                x: xArray,
-                y: yArray,
+                x: [7, 17, 23, 34, 42, 51, 56, 64, 89, 98],
+                y: [52, 56, 61, 67, 69, 73, 79, 84, 86, 99],
                 name: "Physics",
                 mode: "lines+markers",
                 type: "scatter"
             },
             {
-                x: xArray,
-                y: yArray,
+                x: [3, 14, 27, 35, 46, 57, 62, 75, 81, 93],
+                y: [54, 58, 61, 65, 71, 73, 79, 83, 89, 93],
                 name: "Chemistry",
                 mode: "lines+markers",
                 type: "scatter"
             },
             {
-                x: xArray,
-                y: yArray,
+                x: [2, 18, 24, 30, 48, 54, 66, 77, 85, 99],
+                y: [71, 72, 74, 77, 78, 80, 81, 83, 86, 89],
                 name: "Biology",
                 mode: "lines+markers",
                 type: "scatter"
@@ -69,7 +69,7 @@ export default function Analysis() {
             title: {
                 text: "Temporal Score Data",
                 font: {
-                    color: "yellow"
+                    color: "red"
                 }
             },
             paper_bgcolor: "transparent",

@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../lib/AuthProvider";
 import Profile from "./Profile";
 import Channels from './Channels';
-// import TakeExam from "./TakeExam";
+import TakeExam from "./TakeExam";
 
 export default function Console(){
     const { loginState } = useContext(AuthContext);
@@ -29,7 +29,7 @@ export default function Console(){
                     <Route path="/explore/*" element={<Explore />}/>
                     <Route path="/profile" element={<Profile />}/>
                     <Route exact path="/Channels/*" element={<Channels />}/>
-                    {/* <Route path="/Exam/:examID" element={<TakeExam />}/> */}
+                    <Route path="/Exam/:examID" element={<TakeExam />}/>
                 </Routes>
             </div>
         </div>

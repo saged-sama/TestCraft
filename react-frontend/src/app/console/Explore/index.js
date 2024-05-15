@@ -4,7 +4,7 @@ import Explore from "./Explore"
 export default function main() {
     return (
         <div>
-            <div className="h-full">
+            <div className="h-screen">
                 <Routes>
                     <Route exact path = "/" element = {<Explore/>} />
                 </Routes>

@@ -249,7 +249,7 @@ export default function channels(app, database) {
             let sql = "";
             if(groupID !== "0") {
                 sql = `insert into announcement(id, title, post_desc, isTest, creatorID, channelID, groupID, creationTime, lastEdit)
-                values(uuid(), "${title}", "${description}", "${isTest}", "${userID}", "${channelID}", , "${groupID}", now(), now())`;
+                values(uuid(), "${title}", "${description}", "${isTest}", "${userID}", "${channelID}", "${groupID}", now(), now())`;
             }
             else{
                 sql = `insert into announcement(id, title, post_desc, isTest, creatorID, channelID, creationTime, lastEdit)
@@ -291,7 +291,22 @@ export default function channels(app, database) {
                 });
             }
 
-            let sql = `select
+            let sql = "" 
+        if(groupID === "0"){sql = `select
+            a.title,
+            a.post_desc as description,
+            a.isTest,
+            a.creationTime as createdOn,
+            u.usersName as poster
+            from announcement a
+            join userDetails u
+            on a.creatorID = u.userid 
+            where a.isTest = "${isTest}" and a.channelID = "${channelID}" and a.groupID is null
+            order by createdOn DESC`
+        }
+            
+            else{
+                sql = `select
                 a.title,
                 a.post_desc as description,
                 a.isTest,
@@ -300,11 +315,8 @@ export default function channels(app, database) {
                 from announcement a
                 join userDetails u
                 on a.creatorID = u.userid 
-                where a.isTest = "${isTest}" and a.channelID = "${channelID}"`
-            
-            
-            if(groupID !== "0"){
-                sql += ` and a.groupID = "${groupID}"`;
+                where a.isTest = "${isTest}" and a.channelID = "${channelID}" and a.groupID = "${groupID}"
+                order by createdOn DESC`
             }
 
             [rows, _] = await database.connection.promise().query(sql);

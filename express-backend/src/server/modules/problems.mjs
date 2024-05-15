@@ -14,7 +14,7 @@ export default function problem(app, database){
             }
             // console.log(req.body);
             const {subjectID, topics, description, solution} = req.body;
-            console.log({subjectID, topics, description, solution});
+            // console.log({subjectID, topics, description, solution});
             const [rows, _] = await database.connection.promise().query("select addproblem(?, ?, ?, ?, ?) as problemID;", [subjectID, topics, description, solution, userID]);
             const problemID = rows[0]["problemID"];
             return res.status(200).json({

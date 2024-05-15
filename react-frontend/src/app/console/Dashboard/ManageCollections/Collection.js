@@ -273,7 +273,7 @@ export default function Collection() {
             </div>
             <div className="flex w-full h-screen gap-5">
                 <Problems problemss={problemss} deleteProblem={deleteProblem} />
-                <ProblemMenu />
+                {/* <ProblemMenu /> */}
             </div>
         </div>
     )
