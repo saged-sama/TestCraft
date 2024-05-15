@@ -1,57 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import Countdown from './Countdown';
 import { Clock } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { remarkableKatexRender } from '../../../lib/InlineMath';
 
 export default function TakeExam() {
-  const [tests, setTests] = useState([
-    {
-      id: '8d5df87a-48f5-4b64-a2b7-918059c6c774',
-      title: 'Math Quiz',
-      subj: 'Mathematics',
-      topics: 'Algebra',
-      startTime: new Date().toISOString(),
-      endTime: '2024-05-12T10:00:00',
-      totalMarks: 50,
-      instructions: 'Please read the questions carefully and provide your answers in the text areas provided.',
-      questions: [
-        {
-          id: '1',
-          question: 'Explain the concept of variables in algebra.',
-        },
-        {
-          id: '2',
-          question: 'Describe the process of solving a quadratic equation.',
-        },
-        {
-          id: '3',
-          question: 'Explain the concept of variables in algebra.',
-        },
-        {
-          id: '4',
-          question: 'Describe the process of solving a quadratic equation.',
-        },
-        {
-          id: '5',
-          question: 'Explain the concept of variables in algebra.',
-        },
-        {
-          id: '6',
-          question: 'Describe the process of solving a quadratic equation.',
-        }
-      ],
-    },
-  ]);
-
-  const [testData, setTestData] = useState(tests[0]);
+  const { examID } = useParams();
+  const [testData, setTestData] = useState({
+    title: "",
+    subj: "",
+    topics: "",
+    startTime: "",
+    endTime: "",
+    totalMarks: 0
+  });
+  const [problems, setProblems] = useState([]);
   const [userAnswers, setUserAnswers] = useState(
-    tests[0].questions.map(() => '')
+    problems.map(() => '')
   );
 
   const endTime = new Date(new Date(testData.startTime).getTime() + 30 * 60000); // 30 minutes from the start time
+  const getTestInfo = async (examID) => {
+    try {
+      const APIRoot = process.env.REACT_APP_API_ROOT;
+      const getTestInfoAPI = process.env.REACT_APP_GET_TEST_INFO;
+      console.log(APIRoot + getTestInfoAPI + `?testID=${examID}`);
+      const response = await fetch(APIRoot + getTestInfoAPI + `?testID=${examID}`, {
+        method: "GET",
+        credentials: "include"
+      });
+      if (!response.ok) {
+        throw Error("Could not fetch test info");
+      }
+      const resp = await response.json();
+      setTestData(resp.testInfo);
+    } catch (err) {
+      console.error("Could not fetch test info: ", err);
+    }
+  }
+
+  const getProblems = async (examID) => {
+    try {
+      const APIRoot = process.env.REACT_APP_API_ROOT;
+      const getproblemsAPI = process.env.REACT_APP_GET_TEST_PROBLEMS;
+      const response = await fetch(APIRoot + getproblemsAPI + `?testID=${examID}`, {
+        method: "GET",
+        credentials: "include"
+      });
+      if (!response.ok) {
+        throw Error("Could not fetch test problems");
+      }
+      const resp = await response.json();
+      setProblems(resp.problems);
+    } catch (err) {
+      console.error("Could not fetch test problems: ", err);
+    }
+  }
 
   useEffect(() => {
-    setUserAnswers(testData.questions.map(() => ''));
-  }, [testData]);
+    getTestInfo(examID);
+    getProblems(examID);
+    setUserAnswers(problems.map(() => ''));
+  }, [examID]);
 
   const handleChange = (index, event) => {
     const updatedAnswers = [...userAnswers];
@@ -85,7 +95,7 @@ export default function TakeExam() {
   };
 
   return (
-    <div className='flex items-center justify-center w-full h-full'>
+    <div className='flex items-start justify-center w-full h-full min-h-screen'>
       <div className='flex gap-2 items-start justify-end p-10 h-full w-1/5'>
       </div>
       <div className='flex flex-col gap-5 items-center w-3/5 h-full rounded-lg'>
@@ -102,11 +112,11 @@ export default function TakeExam() {
         <div className='flex flex-col w-full p-5 gap-5 items-center'>
           <p className="text-xs text-info mb-6">{testData.instructions}</p>
           <div className='flex flex-col gap-5 items-center w-full p-2'>
-            {testData.questions.map((question, index) => (
+            {problems.map((question, index) => (
               <div key={question.id} className="w-full mb-6">
-                <p className="text-lg font-semibold mb-2">
-                  <span className="font-bold">Question {index + 1}:</span> {question.question}
-                </p>
+                <span className="font-bold">Question {index + 1}:</span> 
+                <div className="flex flex-col gap-4 text-lg font-normal mb-2" dangerouslySetInnerHTML={{__html: remarkableKatexRender(question.question)}}>
+                </div>
                 <textarea
                   value={userAnswers[index]}
                   onChange={(e) => handleChange(index, e)}
@@ -126,49 +136,6 @@ export default function TakeExam() {
       </div>
       <div className='w-1/5 bg-red-700'>
 
-      </div>
-    </div>
-  )
-
-  return (
-    <div className="flex flex-col items-center bg-gray-900 py-8">
-      <div className="bg-gray-800 shadow-md rounded-lg overflow-hidden">
-        <header className="bg-gray-700 text-white py-6 px-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">{testData.title}</h1>
-            <p className="text-lg">{testData.subj} - {testData.topics}</p>
-          </div>
-          <div className="text-right">
-            <p className="text-lg">Total Marks: {testData.totalMarks}</p>
-            <div className="mt-2">
-              <Countdown endTime={endTime} />
-            </div>
-          </div>
-        </header>
-        <main className="p-6">
-          <p className="text-gray-300 text-lg mb-6">{testData.instructions}</p>
-          <div>
-            {testData.questions.map((question, index) => (
-              <div key={question.id} className="mb-6">
-                <p className="text-lg font-semibold mb-2 text-white">
-                  <span className="font-bold">Question {index + 1}:</span> {question.question}
-                </p>
-                <textarea
-                  value={userAnswers[index]}
-                  onChange={(e) => handleChange(index, e)}
-                  placeholder={`Enter your answer for question ${index + 1}`}
-                  className="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-700 text-white"
-                />
-              </div>
-            ))}
-          </div>
-          <button
-            onClick={handleSubmitExam}
-            className="bg-blue-600 text-white text-lg px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
-          >
-            Submit Exam
-          </button>
-        </main>
       </div>
     </div>
   );

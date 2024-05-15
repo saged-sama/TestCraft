@@ -11,11 +11,11 @@ export default function collections(app, database) {
         try {
             const { userID, authToken } = req.cookies;
             const isAuthorized = await user(userID, authToken, database).isAuthorized();
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
             const { collectionName } = req.body;
             await database.connection.promise().execute(addCollection, [collectionName, userID]);
             return res.status(200).json({
@@ -38,11 +38,11 @@ export default function collections(app, database) {
             const ownerID = await collection(collectionID, database).getOwner();
 
             isAuthorized = isAuthorized && (ownerID === userID);
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             await database.connection.promise().execute(renamecollection, [newName, collectionID]);
             return res.status(200).json({
@@ -60,11 +60,11 @@ export default function collections(app, database) {
         try {
             const { userID, authToken } = req.cookies;
             let isAuthorized = await user(userID, authToken, database).isAuthorized();
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             const [rows, _] = await database.connection.promise().query(getAllCollectionsByUserId, [userID]);
 
@@ -84,11 +84,11 @@ export default function collections(app, database) {
             const {collectionID} = req.query;
 
             const permission = await collection(collectionID, database).getPermission(userID);
-            if (!isAuthorized || !permission) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized || !permission) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
             
             const [rows, _] = await database.connection.promise().query("select * from collections where id = ?", [collectionID]);
             return res.status(200).json({
@@ -109,12 +109,12 @@ export default function collections(app, database) {
             const { collectionID } = req.body
             const ownerID = await collection(collectionID, database).getOwner();
 
-            isAuthorized = isAuthorized && (ownerID === userID);
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // isAuthorized = isAuthorized && (ownerID === userID);
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             await database.connection.promise().execute(removecollection, [collectionID, ownerID]);
             return res.status(200).json({
@@ -136,11 +136,11 @@ export default function collections(app, database) {
             const {collectionID, username} = req.body;
             const ownerID = await collection(collectionID, database).getOwner();
             
-            if(ownerID !== userID || !isAuthorized){
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if(ownerID !== userID || !isAuthorized){
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             const [rows, _] = await database.connection.promise().query("select id from user where username = ?", [username]);
             const newUserID = rows[0]["id"];
@@ -163,11 +163,11 @@ export default function collections(app, database) {
             const { userID, authToken } = req.cookies;
             let isAuthorized = await user(userID, authToken, database).isAuthorized();
             
-            if(!isAuthorized){
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if(!isAuthorized){
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
             const {search} = req.query;
 
             const [rows, _] = await database.connection.promise().query("call searchCollections(?, ?)", [userID, search]);
@@ -181,6 +181,33 @@ export default function collections(app, database) {
             return res.status(400).json({
                 message: "Could not share collection with user"
             })
+        }
+    })
+
+    app.get("/get-collection-info", async(req, res) => {
+        try{
+            const { userID, authToken } = req.cookies;
+            // let isAuthorized = await user(userID, authToken, database).isAuthorized();
+
+            const {collectionID} = req.query;
+            // console.log(collectionID);
+            let [rows, _] = await database.connection.promise().query("select count(*) as cnt from collectionAccess where userid = ? and collectionid = ?", [userID, collectionID]);
+
+            const cnt = rows[0]["cnt"]
+            
+            // if(cnt === 0 || !isAuthorized){
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
+
+            [rows, _] = await database.connection.promise().query("select * from collections where id = ?", [collectionID]);
+            return res.status(200).json({
+                collection: rows[0]
+            })
+        }catch(err){
+            console.error("Could not get collection info: ", err);
+            return res.status(500).json({});
         }
     })
 }

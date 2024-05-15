@@ -4,7 +4,6 @@ import { dateExtractFromMySQLDateTime } from "../../../../lib/useDate";
 import { CirclePlus, Search, X } from "lucide-react";
 import { addNewProblem, addProblemToCollection } from "../../../../lib/problem";
 import Problems from "./Problems";
-import ProblemMenu from "./ProblemMenu";
 import { remarkableKatexRender } from "../../../../lib/InlineMath";
 import { getOrdinal } from "../../../../lib/utils";
 

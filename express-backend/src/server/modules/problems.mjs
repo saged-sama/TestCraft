@@ -6,12 +6,12 @@ export default function problem(app, database){
     app.post("/add-new-problem", async(req, res) => {
         try{
             const { userID, authToken } = req.cookies;
-            const isAuthorized = await user(userID, authToken, database).isAuthorized();
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // const isAuthorized = await user(userID, authToken, database).isAuthorized();
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
             // console.log(req.body);
             const {subjectID, topics, description, solution} = req.body;
             // console.log({subjectID, topics, description, solution});
@@ -38,11 +38,11 @@ export default function problem(app, database){
 
             const permission = await collection(collectionID, database).getPermission(userID);
             
-            if (!isAuthorized || !permission) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized || !permission) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             await database.connection.promise().execute("delete from problem where id = ?", [problemID]);
             return res.status(201).json({

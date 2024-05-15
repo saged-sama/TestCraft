@@ -13,6 +13,7 @@ import channels from "./modules/channels.mjs";
 import collections from "./modules/collections.mjs";
 import problems from "./modules/problems.mjs";
 import subjects from "./modules/subjects.mjs";
+import tests from "./modules/tests.mjs";
 
 const useMiddleWares = (app) => {
     app.use(bodyParser.json());
@@ -38,6 +39,7 @@ function main(){
     subjects(app, databaseInstance);
     problems(app, databaseInstance);
     channels(app, databaseInstance);
+    tests(app, databaseInstance);
 
     ViteExpress.listen(app, PORT, async ()=>{
         console.log(`Server running on: http://${HOSTNAME}:${PORT}`);

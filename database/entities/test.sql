@@ -9,14 +9,12 @@ create table if not exists test(
     creatorID char(36) not null,
     channelID char(36) not null,
     groupID char(36),
-    announcementID char(36) not null,
     creationTime datetime,
     foreign key (creatorID) references user(id),
     foreign key (channelID) references channel(id),
-    foreign key (groupID) references grp(id),
-    foreign key (announcementID) references announcement(id)
+    foreign key (groupID) references grp(id)
 );
 
 alter table test
 add constraint chk_test_duration
-check(endTime > startTime)
+check(endTime > startTime);

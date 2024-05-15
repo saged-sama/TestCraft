@@ -12,11 +12,11 @@ export default function channels(app, database) {
             // console.log(userID);
             const isAuthorized = await user(userID, authToken, database).isAuthorized();
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Could not add the channel"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Could not add the channel"
+            //     });
+            // }
 
             const [rows, _] = await database.connection.promise().query("call getAllChannelsByUserID(?)", [userID]);
             // console.log(rows[0]);
@@ -37,11 +37,11 @@ export default function channels(app, database) {
             const { userID, authToken } = req.cookies;
             const isAuthorized = await user(userID, authToken, database).isAuthorized();
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Could not add the channel"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Could not add the channel"
+            //     });
+            // }
             const { channelName } = req.body;
             await database.connection.promise().execute(addchannel, [channelName, userID]);
             return res.status(200).json({
@@ -65,11 +65,11 @@ export default function channels(app, database) {
 
             isAuthorized = isAuthorized && (ownerID === userID);
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Could not delete the channel"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Could not delete the channel"
+            //     });
+            // }
             await database.connection.promise().execute(removechannel, [channelid]);
             return res.status(200).json({
                 message: "Successfully deleted channel"
@@ -88,11 +88,11 @@ export default function channels(app, database) {
             // console.log(userID);
             const isAuthorized = await user(userID, authToken, database).isAuthorized();
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Could not get all the channel"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Could not get all the channel"
+            //     });
+            // }
 
             const [rows, _] = await database.connection.promise().query("select * from channel");
             // console.log(rows[0]);
@@ -119,11 +119,11 @@ export default function channels(app, database) {
 
             isAuthorized = isAuthorized && (cnt > 0);
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
             let channelDetails = await channel(channelID, database).getChannalDetails();
             // console.log("Paisi: ", channelDetails);
 
@@ -163,11 +163,11 @@ export default function channels(app, database) {
 
             isAuthorized = isAuthorized && (cnt > 0);
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
             await database.connection.promise().execute(`call addgroup(?, ?, ?, ?)`, [groupName, "", channelID, userID]);
             return res.status(201).json({
                 message: "successfully created new group"
@@ -193,11 +193,11 @@ export default function channels(app, database) {
 
             isAuthorized = isAuthorized && (cnt > 0);
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             [rows, _] = await database.connection.promise().query(`
                 select 
@@ -240,11 +240,11 @@ export default function channels(app, database) {
 
             isAuthorized = isAuthorized && (cnt > 0) && (cnt2 > 0);
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             let sql = "";
             if(groupID !== "0") {
@@ -285,11 +285,11 @@ export default function channels(app, database) {
 
             isAuthorized = isAuthorized && (cnt > 0) && (cnt2 > 0);
 
-            if (!isAuthorized) {
-                return res.status(401).json({
-                    error: "Unauthorized action"
-                });
-            }
+            // if (!isAuthorized) {
+            //     return res.status(401).json({
+            //         error: "Unauthorized action"
+            //     });
+            // }
 
             let sql = "" 
         if(groupID === "0"){sql = `select
