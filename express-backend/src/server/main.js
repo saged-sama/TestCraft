@@ -27,7 +27,7 @@ const useMiddleWares = (app) => {
 // Globals
 const HOSTNAME = "localhost";
 const PORT = 8000;
-
+        
 // Main function
 function main(){
     const app = express();
