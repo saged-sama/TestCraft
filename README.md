@@ -1,82 +1,42 @@
-# TestCraft
+# sv
 
-`TestCraft` is an online test designing and test-taking platform. It offers some advanced features including progress reports using past results.
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## Technology Stack
+## Creating a project
 
-We've chosen to use a full `JavaScript` stack that uses
+If you're seeing this, you've probably already done this step. Congrats!
 
-- `React` in the frontend
-- `Express` in the backend
-- `MySQL` local server for database
-- `JSX` with `TailwindCSS` for designing
-
-
-## Installation
-
-Make sure `git`, `node`, `npm`, and `mysql` are installed and set up in the system
-
-- <b>Clone from GitHub Repository</b> <br>
-
-Go to the directory you want to create the project in, open terminal, and run the following script:
-```bash
-git clone https://github.com/saged-sama/TestCraft.git
-```
-This will create a `TestCraft` project directory with all the project files
-
-- <b>Database Setup</b> <br>
-
-Open up `MySQL` local server in terminal and login using your credentials. Copy the path to the `testcraft.sql` file which you'll find inside `TestCraft/database/` directory. And then run:
-```bash
-source path/you/just/copied
+```sh
+# create a new project
+npx sv create my-app
 ```
 
-You can also first go to `TestCraft/database/` directory, open up terminal, open and login to `MySQL` terminal, and run:
-```bash
-source testcraft.sql
+To recreate this project with the same configuration:
+
+```sh
+# recreate this project
+pnpm dlx sv@0.17.0 create --template minimal --types ts --add prettier eslint playwright tailwindcss="plugins:typography,forms" sveltekit-adapter="adapter:node" mdsvex ai-tools="ide:claude-code,gemini,vscode+delivery:plugin+tools:mcp,svelte-code-writer,svelte-core-bestpractices,svelte-file-editor+mcpSetup:remote" --install pnpm .
 ```
 
-- <b>Database Variables</b> <br>
+## Developing
 
-Go to the `TestCraft/backend/` directory and create a new file named `.env`. Give your `MySQL` server credentials and fill in:
-```python
-DB_HOST = ""                     # put your MySQL server hostname
-DB_USER = ""                     # put your MySQL server username
-DB_PASSWORD = ""                 # put your password
-DB_DATABASE = "testcraft"        # you don't need to change this
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```sh
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
 ```
 
-- <b>Backend Installation and Run</b> <br>
+## Building
 
-Open terminal in the project `TestCraft/express-backend/` directory. Run:
-```bash
-npm install         # install dependencies
-npm run dev           # run backend server
+To create a production version of your app:
+
+```sh
+npm run build
 ```
 
-- <b>Frontend Installation and Run</b> <br>
+You can preview the production build with `npm run preview`.
 
-Open terminal in the project `TestCraft/react-frontend/` directory. Run:
-```bash
-npm install           # install dependencies
-
-# either
-npm start           # test frontend server
-# or
-npm run build         # build project
-```
-
-## Technology Versions
-
-In the time of development the versions are:
-
-- `React` `v18.2.0`
-- `Express` `v4.18.1`
-- `Node.js` `v21.6.1`
-- `MySQL` `v8.2.0`
-- `Tailwind` `v3.4.1`
-
-## Tool Used to Create all the Diagram
-
-- Class Diagram: [`https://app.diagrams.net`](https://app.diagrams.net)
-- ER Diagram: [`https://dbdiagram.io/`](https://dbdiagram.io/)
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
